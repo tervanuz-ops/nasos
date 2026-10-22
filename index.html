@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com data: blob: capacitor: http://localhost https://localhost; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:">
+<title>TERVAN Nasos</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#4677bd">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TERVAN Nasos">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<style>
+/* Layout: two working columns — inputs left, live engineering results right (sticky on desktop) */
+:root{
+  --bg:#4677bd; --bg-deep:#3a6ab3; --bg-lite:#7ea2d6; --on-bg:#ffffff; --on-bg-muted:rgba(255,255,255,.78);
+  --surface:#ffffff; --field:#f5f8fc; --ink:#14223a; --muted:#5b6880; --line:#d8e0ec;
+  --accent:#2c5fae; --accent-ink:#ffffff; --accent-soft:#e3ecf9; --heat:#c9582a; --heat-soft:#f8e3d8;
+  --ok:#24804a; --ok-soft:#dcf1e3; --warn:#a86b12; --warn-soft:#f7ecd6; --bad:#b0352c; --bad-soft:#f7dedb;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1c3866; --bg-deep:#152c54; --bg-lite:#2c4e86; --on-bg:#ffffff; --on-bg-muted:rgba(255,255,255,.72);
+  --surface:#121c2e; --field:#0e1726; --ink:#e3eaf5; --muted:#93a3bd; --line:#27354d;
+  --accent:#86adeb; --accent-ink:#0d1a30; --accent-soft:#1c2d4a; --heat:#ee8a56; --heat-soft:#3a2419;
+  --ok:#5cc47e; --ok-soft:#173523; --warn:#e1aa4c; --warn-soft:#3a2c14; --bad:#ef6d61; --bad-soft:#3d1c19; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1c3866; --bg-deep:#152c54; --bg-lite:#2c4e86; --on-bg:#ffffff; --on-bg-muted:rgba(255,255,255,.72);
+  --surface:#121c2e; --field:#0e1726; --ink:#e3eaf5; --muted:#93a3bd; --line:#27354d;
+  --accent:#86adeb; --accent-ink:#0d1a30; --accent-soft:#1c2d4a; --heat:#ee8a56; --heat-soft:#3a2419;
+  --ok:#5cc47e; --ok-soft:#173523; --warn:#e1aa4c; --warn-soft:#3a2c14; --bad:#ef6d61; --bad-soft:#3d1c19; color-scheme:dark }
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;min-height:100vh;background-color:var(--bg);background-attachment:fixed;background-image:
+  radial-gradient(circle at 104% -6%, var(--bg-deep) 0 21%, transparent 21.4%),
+  radial-gradient(circle at 118% 62%, color-mix(in srgb,var(--bg-lite) 55%,transparent) 0 43%, transparent 43.4%),
+  radial-gradient(circle at -22% 38%, color-mix(in srgb,var(--bg-lite) 60%,transparent) 0 46%, transparent 46.4%),
+  radial-gradient(ellipse 70% 60% at 50% 48%, var(--bg-deep) 0%, transparent 100%)}
+.top{background:transparent;color:var(--on-bg);padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top-in{max-width:1500px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.brand h1{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand p{margin:0;color:var(--on-bg-muted);font-size:12.5px}
+.brand img{height:40px;width:auto;display:block}
+.brand .div{width:1px;align-self:stretch;background:rgba(255,255,255,.35)}
+.top .btn{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.4)}
+.top .btn.pri{background:#fff;color:#24529c;border-color:#fff}
+.on-bg{color:var(--on-bg-muted)!important}
+.top-act{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn.ghost{background:transparent}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.wrap{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:1080px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.res{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}
+@media (max-width:1080px){.res{position:static;max-height:none;overflow:visible}}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.sec>h2{display:flex;align-items:baseline;gap:10px;margin:0 0 12px;font-size:15px;font-weight:700}
+.sec>h2 .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);font-weight:600;background:var(--accent-soft);border-radius:5px;padding:2px 6px}
+.sec>h2 .hint{margin-left:auto;font-weight:400;font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f>span{font-size:12px;color:var(--muted);font-weight:500}
+.f.w2{grid-column:span 2}
+@media (max-width:420px){.f.w2{grid-column:span 1}}
+.in{display:flex;align-items:center;background:var(--field);border:1px solid var(--line);border-radius:7px;min-width:0}
+.in:focus-within{border-color:var(--accent)}
+.in input,.in select{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;padding:7px 9px}
+.in select{padding-right:4px;cursor:pointer}
+.in i{font-style:normal;font-size:11.5px;color:var(--muted);padding-right:9px;white-space:nowrap}
+.in input[type=number]{font-family:var(--f-mono);font-size:13px}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;gap:8px;align-items:end;background:var(--field);border:1px solid var(--line);border-radius:8px;padding:10px}
+.row .in{background:var(--surface)}
+.row.wall{grid-template-columns:minmax(140px,2fr) 76px minmax(130px,1.6fr) 76px 88px auto}
+.row.win{grid-template-columns:minmax(170px,2.4fr) 76px 76px 64px auto}
+.row.door{grid-template-columns:minmax(150px,2fr) minmax(120px,1.2fr) 84px 84px 64px auto}
+.row.tank{grid-template-columns:minmax(150px,2fr) 100px 140px auto}
+.row.rad{grid-template-columns:minmax(150px,2fr) 70px 90px 110px auto auto}
+@media (max-width:640px){.row.wall,.row.win,.row.door,.row.tank,.row.rad{grid-template-columns:1fr 1fr}.row .f.wide{grid-column:1/-1}}
+.meta{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap;align-self:center}
+.x{border:0;background:transparent;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:6px;border-radius:6px;align-self:center}
+.x:hover{color:var(--bad);background:var(--bad-soft)}
+.add{margin-top:8px}
+.note{font-size:12px;color:var(--muted);margin:8px 0 0}
+.info{font-size:12.5px;background:var(--accent-soft);border-radius:7px;padding:8px 10px;margin-top:10px;font-family:var(--f-mono)}
+.hp{background:var(--field);border:1px solid var(--line);border-radius:8px;padding:12px}
+.hp .in{background:var(--surface)}
+.hp-h{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.hp-h .in{flex:1}
+.sub{font-size:13px;font-weight:700;margin:16px 0 8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw{overflow-x:auto}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:620px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--surface)}
+.kpi b{display:block;font-family:var(--f-display);font-weight:600;font-size:22px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi span{font-size:11.5px;color:var(--muted)}
+.kpi.main{background:var(--heat-soft);border-color:transparent}
+.kpi.main b{color:var(--heat)}
+.bar{height:6px;border-radius:3px;background:var(--heat);min-width:2px}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.warn{background:var(--warn-soft);color:var(--warn)}.pill.bad{background:var(--bad-soft);color:var(--bad)}.pill.info{background:var(--accent-soft);color:var(--accent)}
+.rec{border:1.5px solid var(--accent);border-radius:var(--r);padding:14px 16px;background:var(--surface)}
+.rec h3{margin:0 0 4px;font-family:var(--f-display);font-weight:600;font-size:17px}
+.rec .why{margin:6px 0 0;color:var(--muted);font-size:13px}
+.rec ul{margin:8px 0 0;padding-left:18px;font-size:13px}
+tr.best td{background:var(--accent-soft)}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:4px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:13px;z-index:20;max-width:calc(100% - 32px)}
+textarea{width:100%;min-height:90px;font-family:var(--f-mono);font-size:12px;background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:8px}
+details summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--accent)}
+.lock{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:16px}
+.lock.dim{background:rgba(10,20,40,.55)}
+.lock-card{width:min(360px,100%);display:flex;flex-direction:column;gap:14px;align-items:stretch;text-align:center}
+.lock-card img{width:170px;height:auto;margin:0 auto}
+.lock-card h2{margin:0 0 6px;font-family:var(--f-display);font-weight:500;font-size:16px;color:#fff}
+.lock-card .f>span{color:rgba(255,255,255,.85);text-align:left}
+.lock-card .in{background:#fff;border-color:#fff}.lock-card .in input{color:#14223a}
+.lock-card .btn.pri{background:#fff;color:#24529c;border-color:#fff;padding:11px}
+.lock-card.light{background:var(--surface);border-radius:12px;padding:20px;text-align:left}
+.lock-card.light .f>span{color:var(--muted)}.lock-card.light .in{background:var(--field);border-color:var(--line)}.lock-card.light .in input{color:var(--ink)}
+.lock-card.light .btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.err{color:#ffd2cc;margin:0;font-size:13px;min-height:1em}.lock-card.light .err{color:var(--bad)}
+@media (max-width:640px){input,select,textarea{font-size:16px!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head><body>
+<div id="app" hidden>
+<header class="top"><div class="top-in">
+  <div class="brand">
+    <img src="data:image/png;base64,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" alt="TERVAN" width="106" height="40"><span class="div" aria-hidden="true"></span>
+    <div><h1>Issiqlik Nasosi Tanlovchi</h1><p>EN 12831 usulida issiqlik yo'qotilishi · nasos va buffer tanlash · yoqilg'i solishtirmasi</p></div>
+  </div>
+  <div class="top-act">
+    <button class="btn ghost" id="btnPw" type="button">Parol</button><button class="btn ghost" id="btnLock" type="button">Chiqish</button>
+    <button class="btn ghost" id="btnReset" type="button">Namunaga qaytarish</button>
+    <button class="btn pri" id="btnPdf" type="button">PDF yuklab olish</button>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="col" id="inputs"></div>
+  <div class="col res" id="results"></div>
+</main>
+</div>
+<div class="toast" id="toast" hidden></div>
+<div id="login" class="lock" hidden>
+  <form id="loginForm" class="lock-card" autocomplete="off">
+    <img id="loginLogo" alt="TERVAN" width="160" height="60">
+    <h2>Issiqlik Nasosi Tanlovchi</h2>
+    <label class="f" for="pwIn"><span>Parol</span><div class="in"><input type="password" id="pwIn" autocomplete="current-password"></div></label>
+    <p id="pwErr" class="err" hidden>Parol noto'g'ri</p>
+    <button class="btn pri" type="submit">Kirish</button>
+  </form>
+</div>
+<div id="pwDlg" class="lock dim" hidden>
+  <form id="pwForm" class="lock-card light">
+    <h2 style="color:var(--ink)">Parolni o'zgartirish</h2>
+    <label class="f" for="pwOld"><span>Joriy parol</span><div class="in"><input type="password" id="pwOld"></div></label>
+    <label class="f" for="pwNew"><span>Yangi parol</span><div class="in"><input type="password" id="pwNew"></div></label>
+    <label class="f" for="pwNew2"><span>Yangi parolni takrorlang</span><div class="in"><input type="password" id="pwNew2"></div></label>
+    <p id="pwMsg" class="err"></p>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" type="button" id="pwCancel">Bekor qilish</button><button class="btn pri" type="submit">Saqlash</button></div>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+// Mahalliy kutubxona bo'lmasa (masalan, faylni brauzerda ochganda) — internetdan yuklash
+if(!window.jspdf){ document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"><\/script>'); }
+</script>
+<script>
+/* ===================== MA'LUMOTLAR BAZASI ===================== */
+// Hududlar: hisobiy tashqi harorat (eng sovuq 5 kunlik, ShNK 2.01.01 ga yaqin) va oylik o'rtacha haroratlar (Okt..Apr)
+const REG = {
+  toshkent_sh:{n:"Toshkent shahri",te:-16,d:129,tp:2.7,m:[14.5,8,3.5,1.5,3.5,9.5,15.5]},
+  toshkent_v:{n:"Toshkent viloyati",te:-17,d:135,tp:2.2,m:[13.5,7,2.5,0.5,2.5,8.5,14.5]},
+  andijon:{n:"Andijon viloyati",te:-16,d:130,tp:1.6,m:[14,6.5,1,-2,1.5,8.5,15.5]},
+  fargona:{n:"Farg'ona viloyati",te:-15,d:132,tp:1.9,m:[14,7,1.5,-1.5,2,9,16]},
+  namangan:{n:"Namangan viloyati",te:-17,d:128,tp:1.5,m:[14,6.5,1,-2,1.5,9,16]},
+  sirdaryo:{n:"Sirdaryo viloyati",te:-20,d:134,tp:1.8,m:[14,7,2,-0.5,2,9,16]},
+  jizzax:{n:"Jizzax viloyati",te:-19,d:126,tp:2.7,m:[14.5,7.5,2.5,0.5,3,9.5,16]},
+  samarqand:{n:"Samarqand viloyati",te:-15,d:133,tp:3.3,m:[14,8,3.5,1,3,8.5,14.5]},
+  qashqadaryo:{n:"Qashqadaryo viloyati",te:-14,d:110,tp:4.2,m:[16,9.5,4.5,2.5,5,11,17]},
+  surxondaryo:{n:"Surxondaryo viloyati",te:-12,d:91,tp:4.5,m:[18,10.5,5.5,3.5,6,12,18.5]},
+  buxoro:{n:"Buxoro viloyati",te:-15,d:126,tp:3.1,m:[15,8,2.5,0.5,3.5,10,17]},
+  navoiy:{n:"Navoiy viloyati",te:-16,d:123,tp:3.5,m:[14.5,7.5,2,0,3,9.5,16.5]},
+  xorazm:{n:"Xorazm viloyati",te:-21,d:148,tp:0.8,m:[13,5,-1,-3.5,-1,6,15]},
+  qoraqalpoq:{n:"Qoraqalpog'iston Respublikasi",te:-23,d:143,tp:-0.6,m:[12,3.5,-2.5,-5,-2.5,5,14]},
+};
+const HEAT_MI=[9,10,11,0,1,2,3];
+const MONTHS=["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"];
+const MDAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
+const GAS_WINTER=[10,11,0,1]; // noyabr-fevral: isitish mavsumi normasi
+
+const WALLMAT={gisht_pishiq:["Pishiq g'isht (to'liq)",0.70],gisht_govak:["G'ovak (teshikli) g'isht",0.45],gisht_silikat:["Silikat g'isht",0.80],keramik_blok:["Keramik g'ovak blok",0.20],gazoblok:["Gazoblok D500",0.14],penobeton:["Penobeton D600",0.18],keramzit_blok:["Keramzitbeton blok",0.40],shlakoblok:["Shlakoblok",0.60],paxsa:["Paxsa / guvala (loy)",0.60],beton:["Temirbeton (monolit, panel)",1.70],tosh:["Tabiiy tosh",1.40],yogoch:["Yog'och (brus)",0.14],sendvich:["Sendvich panel (PIR/PUR)",0.025],sendvich_mv:["Sendvich panel (mineral paxta)",0.045]};
+const INS={none:["Izolyatsiyasiz",0],eps:["Penoplast (EPS)",0.038],xps:["Ekstrudirlangan penoplast (XPS)",0.032],mv:["Mineral paxta",0.040],bazalt:["Bazalt paxta",0.037],pir:["PIR/PUR ko'pik",0.025],ekovata:["Ekovata",0.042],keramzit:["Keramzit (to'kma)",0.16],shlak:["Shlak (to'kma)",0.25],qamish:["Qamish / somon plita",0.08]};
+const WIN={yog1:["Yog'och rom, bir qavat oyna",5.0],yog2:["Yog'och rom, ikki qavat oyna (eski)",2.8],al_sov:["Alyumin, termoko'priksiz",4.2],al_term:["Alyumin, termoko'prikli, 1 kamerali",2.6],pvx1:["Plastik, 1 kamerali paket (4-16-4)",2.7],pvx2:["Plastik, 2 kamerali paket",1.8],pvx2e:["Plastik, 2 kamerali energotejamkor (Low-E, argon)",1.2],pvx3:["Plastik, 3 kamerali issiq profil",0.9],yog_evro:["Yog'och evro-rom, 2 kamerali",1.3],vitraj:["Panorama vitraj (alyumin, 1 kamerali)",2.3]};
+const DOOR={met_s:["Metall, izolyatsiyasiz",5.5],met_i:["Metall, izolyatsiyali (termo)",1.8],yog_q:["Yog'och, yaxlit qalin",2.5],yog_y:["Yog'och, yupqa / eski",3.5],pvx:["Plastik, oynali",2.4],al:["Alyumin, oynali",3.8],gar_i:["Garaj darvozasi, seksiyali izolyatsiyali",1.5],gar_m:["Garaj darvozasi, oddiy metall",6.0]};
+const DOORLOC={tashqi:["Tashqariga",1],isitilmagan:["Isitilmaydigan xonaga",0.5]};
+const ROOFT={cherdak:["Sovuq cherdak ostidagi shift",0.9],tekis:["Tekis tom (tashqi havo bilan)",1.0],mansard:["Mansard / qiya tom ostidagi xona",1.0],none:["Ustida isitiladigan qavat",0]};
+const ROOFB={temirbeton:["Temirbeton plita 22 sm",0.13],yogoch:["Yog'och to'sinli shift (taxta + shuvoq)",0.30],gazobeton:["Gazobeton plita 20 sm",1.2],profnastil:["Profnastil / metall tom",0.02],shifer:["Shifer + yog'och karkas",0.15]};
+const FLOORT={grunt:["Gruntdagi pol (yerga yotqizilgan)",0.5],yertola:["Isitilmaydigan yerto'la ustida",0.6],ochiq:["Ochiq havo ustida (ustunli ayvon)",1.0],none:["Pastda isitiladigan qavat",0]};
+const FLOORB={beton:["Beton stashka 10 sm",0.06],yogoch:["Yog'och pol (lagda)",0.35],temirbeton:["Temirbeton plita 22 sm",0.13]};
+const EMIT={rad:["Radiatorlar — suv harorati radiatorlar soni bo'yicha hisoblanadi",null],pol:["Issiq pol (35°C)",35],fankoyl:["Fankoyl / past haroratli tizim (45°C)",45]};
+const SKY={mans2:["Mansard derazasi, 2 kamerali (Low-E)",1.4],mans1:["Mansard derazasi, 1 kamerali",2.6],pvx1:["Plastik rom, 1 kamerali paket",3.0],al1:["Alyumin fonar, 1 kamerali",3.6],al2:["Alyumin fonar, 2 kamerali",2.2],pk10:["Polikarbonat, uyali 10 mm",3.0],pk16:["Polikarbonat, uyali 16 mm",2.4],shisha:["Oddiy bir qavat shisha",5.8]};
+// EN 442 nominal (75/65/20, ΔT 50 K) bo'yicha 1 seksiya / panel issiqlik berishi, W; n — daraja ko'rsatkichi
+const RADT={alyumin:["Alyumin seksiyali, 500 mm",170,1.32,"seksiya"],bimetall:["Bimetall seksiyali, 500 mm",160,1.32,"seksiya"],choyan:["Cho'yan seksiyali (MS-140), 500 mm",115,1.30,"seksiya"],alyumin350:["Alyumin seksiyali, 350 mm",125,1.32,"seksiya"],panel11:["Po'lat panel 11 tip, 500×1000",830,1.33,"panel"],panel22:["Po'lat panel 22 tip, 500×1000",1450,1.33,"panel"],panel33:["Po'lat panel 33 tip, 500×1000",2050,1.33,"panel"],quvur:["Quvurli / dizayn radiator",600,1.30,"dona"]};
+const TIGHT={"0.3":"Juda zich — yangi, sifatli qurilish (0,3 1/soat)","0.5":"Zich — plastik derazalar, germetik (0,5 1/soat)","0.7":"O'rtacha (0,7 1/soat)","1":"Eski uy, tirqishlar bor (1,0 1/soat)","1.3":"Juda shamol o'tadi (1,3 1/soat)"};
+const BRIDGE={"0.02":"Minimal — tashqi izolyatsiya, puxta detallar (0,02)","0.05":"Odatiy (0,05)","0.1":"Ko'p — temirbeton belbog', balkon plitalari (0,10)","0.15":"Juda ko'p — izolyatsiyasiz karkas (0,15)"};
+const HPKIND={havo:"Havo–suv",grunt:"Grunt–suv (B0/W35)",suv:"Suv–suv (W10/W35)"};
+
+/* ===================== NAMUNA HOLAT ===================== */
+const DEFAULT = () => ({
+  client:{name:"Namuna mijoz",phone:"",address:"",preparer:""},
+  region:"toshkent_sh", ti:20, teOv:null,
+  bld:{len:12,wid:10,floors:1,h:3,area:null,perim:null},
+  walls:[{mat:"gisht_pishiq",th:38,ins:"none",insTh:0,area:null}],
+  windows:[{type:"pvx1",w:1.5,h:1.5,n:8}],
+  doors:[{type:"met_i",loc:"tashqi",w:1.0,h:2.1,n:1},{type:"pvx",loc:"tashqi",w:0.9,h:2.1,n:1}],
+  roof:{type:"cherdak",base:"yogoch",ins:"mv",insTh:10},
+  skylights:[],
+  rads:[{type:"alyumin",n:12,sec:12,w:null}],
+  floor:{type:"grunt",base:"beton",ins:"none",insTh:0},
+  vent:{n:"0.5",hr:0}, bridge:"0.05", margin:10,
+  dhw:{on:true,persons:4,liters:50}, emitter:"rad",
+  pumps:[
+    {name:"Namuna: havo–suv 6 kVt inverter",kind:"havo",p7:6,cop7:4.8,pm7:4.9,copm7:2.9,tmin:-25,tmax:60,inv:true,price:32000000},
+    {name:"Namuna: havo–suv 9 kVt inverter",kind:"havo",p7:9,cop7:4.7,pm7:7.6,copm7:2.8,tmin:-25,tmax:60,inv:true,price:42000000},
+    {name:"Namuna: havo–suv 12 kVt inverter",kind:"havo",p7:12,cop7:4.6,pm7:10.2,copm7:2.75,tmin:-25,tmax:60,inv:true,price:52000000},
+    {name:"Namuna: havo–suv 16 kVt (3 faza)",kind:"havo",p7:16,cop7:4.5,pm7:13.5,copm7:2.7,tmin:-25,tmax:60,inv:true,price:65000000},
+    {name:"Namuna: grunt–suv 10 kVt",kind:"grunt",p7:10,cop7:4.6,pm7:null,copm7:null,tmin:null,tmax:62,inv:false,price:95000000},
+  ],
+  tanks:[{name:"Namuna: buffer 50 L",vol:50,price:2500000},{name:"Namuna: buffer 100 L",vol:100,price:3500000},{name:"Namuna: buffer 200 L",vol:200,price:5500000},{name:"Namuna: buffer 300 L",vol:300,price:7500000}],
+  install:6000000, compare:"auto",
+  tar:{
+    elec:[[200,650],[500,900],[1000,1100],[5000,1600],[10000,1900],[null,2200]],
+    gasNormP:1100, gasNormW:500, gasNormO:100,
+    gasTiers:[[2500,2000],[5000,2300],[10000,2700],[null,3300]],
+    gasKwh:9.3, effGas:90, coalPrice:1100000, coalKwh:4.6, effCoal:65, effEl:99,
+    baseElec:250, baseGas:30,
+    pGas:9000000, pCoal:5500000, pEl:4500000,
+  }
+});
+
+let S = DEFAULT();
+try{ const raw=localStorage.getItem("inhisob.v2")||localStorage.getItem("inhisob.v1"); if(raw){ const d=JSON.parse(raw), D=DEFAULT(); S=Object.assign(D,d); S.tar=Object.assign(DEFAULT().tar,d.tar||{}); S.client=Object.assign(DEFAULT().client,d.client||{}); S.bld=Object.assign(DEFAULT().bld,d.bld||{}); if(!Array.isArray(S.skylights)) S.skylights=[]; if(!Array.isArray(S.rads)) S.rads=DEFAULT().rads; if(!EMIT[S.emitter]) S.emitter="rad"; } }catch(e){}
+let saveT=null; function persist(){ clearTimeout(saveT); saveT=setTimeout(()=>{ try{localStorage.setItem("inhisob.v2",JSON.stringify(S))}catch(e){} },400); }
+
+/* ===================== YORDAMCHILAR ===================== */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fmt(v,d=0){ if(v==null||!isFinite(v)) return "—"; const s=Math.abs(v).toFixed(d); let [i,f]=s.split("."); i=i.replace(/\B(?=(\d{3})+(?!\d))/g," "); return (v<0&&+s!==0?"−":"")+i+(f?","+f:""); }
+const som=v=>fmt(v)+" so'm";
+function getP(p){ return p.split(".").reduce((o,k)=>o==null?o:o[k],S); }
+function setP(p,v){ const ks=p.split("."); let o=S; for(let i=0;i<ks.length-1;i++) o=o[ks[i]]; o[ks[ks.length-1]]=v; }
+const pid=p=>"f-"+p.replace(/\./g,"-");
+function num(p,label,unit,cls="",ph=""){ const v=getP(p); return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><input type="number" step="any" inputmode="decimal" id="${pid(p)}" data-path="${p}" data-t="n" value="${v??""}" placeholder="${esc(ph)}">${unit?`<i>${unit}</i>`:""}</div></label>`; }
+function txt(p,label,cls="",ph=""){ return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><input type="text" id="${pid(p)}" data-path="${p}" data-t="s" value="${esc(getP(p))}" placeholder="${esc(ph)}"></div></label>`; }
+function sel(p,label,map,cls=""){ const v=String(getP(p)); const o=Object.entries(map).map(([k,x])=>`<option value="${k}"${k===v?" selected":""}>${esc(Array.isArray(x)?x[0]:(x.n||x))}</option>`).join(""); return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><select id="${pid(p)}" data-path="${p}" data-t="s">${o}</select></div></label>`; }
+function chk(p,label){ return `<label class="chk" for="${pid(p)}"><input type="checkbox" id="${pid(p)}" data-path="${p}" data-t="b"${getP(p)?" checked":""}> ${label}</label>`; }
+function toast(m){ const t=$("#toast"); t.textContent=m; t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true,3200); }
+const sec=(n,title,hint,body)=>`<section class="sec"><h2><span class="n">${n}</span>${title}${hint?`<span class="hint">${hint}</span>`:""}</h2>${body}</section>`;
+
+/* ===================== KIRITISH PANELI ===================== */
+function renderInputs(){
+  const tierRows=(key,unitLab)=>S.tar[key].map((t,i)=>`<div class="row tank" style="grid-template-columns:1fr 1fr auto">${num(`tar.${key}.${i}.0`,i===S.tar[key].length-1?"Undan yuqori (bo'sh qoldiring)":"Chegaraga qadar",unitLab,"","∞")}${num(`tar.${key}.${i}.1`,"Narx","so'm")}<span></span></div>`).join("");
+  $("#inputs").innerHTML = [
+  sec("01","Mijoz va joylashuv","",`<div class="grid">${txt("client.name","Mijoz F.I.Sh.","w2")}${txt("client.phone","Telefon","","+998 ...")}${txt("client.address","Manzil","w2")}${txt("client.preparer","Hisobni tayyorladi","","Kompaniya / usta")}
+    ${sel("region","Hudud",REG,"w2")}${num("ti","Ichki harorat","°C")}${num("teOv","Hisobiy tashqi harorat","°C","","avto")}</div><div class="info" id="regInfo"></div>`),
+  sec("02","Bino o'lchamlari","Tashqi o'lchamlar bo'yicha",`<div class="grid">${num("bld.len","Uzunligi","m")}${num("bld.wid","Eni","m")}${num("bld.floors","Qavatlar soni","")}${num("bld.h","Qavat balandligi","m")}${num("bld.area","Uyning jami maydoni","m²","","avto")}${num("bld.perim","Tashqi devorlar uzunligi","m","","avto")}</div><p class="note">Jami maydon — barcha isitiladigan qavatlar yig'indisi. Tashqi devorlar uzunligi — uy perimetri (bir qavat bo'yicha). Bo'sh qoldirilsa, uzunlik va endan hisoblanadi; murakkab shakldagi (G, P shaklli) uylar uchun ikkalasini aniq kiriting.</p><div class="info" id="geoInfo"></div>`),
+  sec("03","Tashqi devorlar","Maydon bo'sh bo'lsa — avtomatik",`<div class="rows">${S.walls.map((w,i)=>`<div class="row wall">${sel(`walls.${i}.mat`,"Devor materiali",Object.fromEntries(Object.entries(WALLMAT).map(([k,v])=>[k,[`${v[0]} · λ ${String(v[1]).replace(".",",")}`]])),"wide")}${num(`walls.${i}.th`,"Qalinligi","sm")}${sel(`walls.${i}.ins`,"Izolyatsiya",INS,"wide")}${num(`walls.${i}.insTh`,"Izol. qalinligi","sm")}${num(`walls.${i}.area`,"Maydon","m²","","avto")}<div style="display:flex;align-items:center">${S.walls.length>1?`<button class="x" type="button" data-del="walls.${i}" aria-label="O'chirish">×</button>`:""}</div><span class="meta" style="grid-column:1/-1;white-space:normal" id="u-wall-${i}"></span></div>`).join("")}</div><button class="btn sm add" type="button" data-add="walls">+ Devor turi qo'shish</button><p class="note">Devor turlari bir nechta bo'lsa (masalan, eski g'isht qism va yangi gazoblok qism), har birini alohida qo'shing va maydonini kiriting. Ichki va tashqi suvoq hisobga olingan.</p>`),
+  sec("04","Derazalar","",`<div class="rows">${S.windows.map((w,i)=>`<div class="row win">${sel(`windows.${i}.type`,"Deraza turi",Object.fromEntries(Object.entries(WIN).map(([k,v])=>[k,[`${v[0]} · U ${String(v[1]).replace(".",",")}`]])),"wide")}${num(`windows.${i}.w`,"Eni","m")}${num(`windows.${i}.h`,"Bo'yi","m")}${num(`windows.${i}.n`,"Soni","dona")}<div style="display:flex;gap:4px;align-items:center"><span class="meta" id="a-win-${i}"></span><button class="x" type="button" data-del="windows.${i}" aria-label="O'chirish">×</button></div></div>`).join("")}</div><button class="btn sm add" type="button" data-add="windows">+ Deraza qo'shish</button>`),
+  sec("05","Eshiklar va darvozalar","",`<div class="rows">${S.doors.map((w,i)=>`<div class="row door">${sel(`doors.${i}.type`,"Eshik turi",Object.fromEntries(Object.entries(DOOR).map(([k,v])=>[k,[`${v[0]} · U ${String(v[1]).replace(".",",")}`]])),"wide")}${sel(`doors.${i}.loc`,"Qayerga ochiladi",DOORLOC,"wide")}${num(`doors.${i}.w`,"Eni","m")}${num(`doors.${i}.h`,"Bo'yi","m")}${num(`doors.${i}.n`,"Soni","")}<div style="display:flex;gap:4px;align-items:center"><button class="x" type="button" data-del="doors.${i}" aria-label="O'chirish">×</button></div></div>`).join("")}</div><button class="btn sm add" type="button" data-add="doors">+ Eshik qo'shish</button>`),
+  sec("06","Tom va shift","",`<div class="grid">${sel("roof.type","Tom turi",ROOFT,"w2")}${sel("roof.base","Shift konstruksiyasi",ROOFB,"w2")}${sel("roof.ins","Izolyatsiya",INS,"w2")}${num("roof.insTh","Izolyatsiya qalinligi","sm")}</div><div class="info" id="roofInfo"></div>
+    <div class="sub">Lomboz (tomdagi deraza / fonar)</div><div class="rows">${S.skylights.length?S.skylights.map((w,i)=>`<div class="row win">${sel(`skylights.${i}.type`,"Lomboz turi",Object.fromEntries(Object.entries(SKY).map(([k,v])=>[k,[`${v[0]} · U ${String(v[1]).replace(".",",")}`]])),"wide")}${num(`skylights.${i}.w`,"Eni","m")}${num(`skylights.${i}.h`,"Bo'yi","m")}${num(`skylights.${i}.n`,"Soni","dona")}<div style="display:flex;gap:4px;align-items:center"><span class="meta" id="a-sky-${i}"></span><button class="x" type="button" data-del="skylights.${i}" aria-label="O'chirish">×</button></div></div>`).join(""):`<p class="note" style="margin:0">Lomboz yo'q.</p>`}</div><button class="btn sm add" type="button" data-add="skylights">+ Lomboz qo'shish</button><p class="note">Lomboz maydoni tom/shift maydonidan ayiriladi. Qiya o'rnatilgan oynaning U qiymati vertikaldagidan yuqori — qiymatlar shuni hisobga olgan.</p>`),
+  sec("07","Pol","",`<div class="grid">${sel("floor.type","Pol turi",FLOORT,"w2")}${sel("floor.base","Pol konstruksiyasi",FLOORB,"w2")}${sel("floor.ins","Izolyatsiya",INS,"w2")}${num("floor.insTh","Izolyatsiya qalinligi","sm")}</div><div class="info" id="floorInfo"></div>`),
+  sec("08","Havo almashinuvi, issiq suv, isitish tizimi","",`<div class="grid">${sel("vent.n","Bino zichligi / havo almashinuvi",TIGHT,"w2")}${num("vent.hr","Rekuperator FIK","%","","0")}${sel("bridge","Issiqlik ko'priklari (ΔU)",BRIDGE,"w2")}${num("margin","Qayta qizdirish zaxirasi","%")}${sel("emitter","Isitish tizimi",EMIT,"w2")}</div>
+    ${S.emitter==="rad"?`<div class="sub">Radiatorlar</div><div class="rows">${S.rads.map((r,i)=>{ const t=RADT[r.type]||RADT.alyumin; const isSec=t[3]==="seksiya"; return `<div class="row rad">${sel(`rads.${i}.type`,"Radiator turi",RADT,"wide")}${num(`rads.${i}.n`,"Soni","dona")}${isSec?num(`rads.${i}.sec`,"Seksiya","har birida"):`<span></span>`}${num(`rads.${i}.w`,isSec?"1 seksiya, W":"1 dona, W","ΔT50","",String(t[1]))}<span class="meta" id="q-rad-${i}"></span><button class="x" type="button" data-del="rads.${i}" aria-label="O'chirish">×</button></div>`; }).join("")}</div><button class="btn sm add" type="button" data-add="rads">+ Radiator turi qo'shish</button><p class="note">Quvvat — pasportdagi EN 442 qiymati (75/65/20 °C, ΔT 50 K). Bo'sh qoldirilsa, tur bo'yicha o'rtacha qiymat olinadi. Ilova radiatorlar uyni qizdirishi uchun kerak bo'ladigan suv haroratini hisoblaydi.</p><div class="info" id="radInfo"></div>`:""}
+    <div style="margin-top:12px">${chk("dhw.on","Maishiy issiq suv ham issiqlik nasosidan tayyorlanadi")}</div><div class="grid" style="margin-top:8px">${num("dhw.persons","Yashovchilar","kishi")}${num("dhw.liters","Issiq suv sarfi","L/kun")}</div>`),
+  sec("09","Sizdagi issiqlik nasoslari va buffer tanklar","Pasport ma'lumotlaridan",`<div class="rows">${S.pumps.map((h,i)=>`<div class="hp"><div class="hp-h"><div class="in"><input type="text" aria-label="Nasos nomi" id="${pid(`pumps.${i}.name`)}" data-path="pumps.${i}.name" data-t="s" value="${esc(h.name)}"></div><button class="x" type="button" data-del="pumps.${i}" aria-label="O'chirish">×</button></div><div class="grid">${sel(`pumps.${i}.kind`,"Turi",HPKIND)}${num(`pumps.${i}.p7`,h.kind==="havo"?"Quvvat A7/W35":"Quvvat (nominal)","kVt")}${num(`pumps.${i}.cop7`,h.kind==="havo"?"COP A7/W35":"COP (nominal)","")}${h.kind==="havo"?num(`pumps.${i}.pm7`,"Quvvat A-7/W35","kVt","","avto")+num(`pumps.${i}.copm7`,"COP A-7/W35","","","avto")+num(`pumps.${i}.tmin`,"Min. ish harorati","°C"):""}${num(`pumps.${i}.tmax`,"Maks. suv harorati","°C")}${num(`pumps.${i}.price`,"Narxi","so'm")}<label class="chk" style="align-self:end;padding-bottom:8px"><input type="checkbox" data-path="pumps.${i}.inv" data-t="b"${h.inv?" checked":""}> Inverter</label></div></div>`).join("")}</div>
+    <button class="btn sm add" type="button" data-add="pumps">+ Issiqlik nasosi qo'shish</button>
+    <div class="sub">Buffer tanklar</div><div class="rows">${S.tanks.map((t,i)=>`<div class="row tank">${txt(`tanks.${i}.name`,"Nomi","wide")}${num(`tanks.${i}.vol`,"Hajmi","L")}${num(`tanks.${i}.price`,"Narxi","so'm")}<button class="x" type="button" data-del="tanks.${i}" aria-label="O'chirish">×</button></div>`).join("")}</div>
+    <button class="btn sm add" type="button" data-add="tanks">+ Buffer tank qo'shish</button>
+    <div class="grid" style="margin-top:12px">${num("install","Montaj xarajati (nasos uchun)","so'm","w2")}</div>
+    <details style="margin-top:12px"><summary>Katalogni saqlash / boshqa qurilmaga ko'chirish</summary><p class="note">Katalog shu brauzerda avtomatik saqlanadi. Boshqa kompyuterga o'tkazish uchun matnni nusxalab, u yerda joylang.</p><textarea id="catTxt" aria-label="Katalog JSON"></textarea><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap"><button class="btn sm" type="button" id="catCopy">Katalogni nusxalash</button><button class="btn sm" type="button" id="catApply">Joylangan katalogni qo'llash</button></div></details>`),
+  sec("10","Tariflar va narxlar","1-iyun 2026 dan amaldagi aholi tariflari",`<div class="sub" style="margin-top:0">Elektr energiyasi (oylik iste'mol bo'yicha pog'onalar)</div><div class="rows">${tierRows("elec","kVt·soat")}</div>
+    <div class="sub">Tabiiy gaz</div><div class="grid">${num("tar.gasNormP","Norma ichida narx","so'm/m³")}${num("tar.gasNormW","Norma: noyabr–fevral","m³/oy")}${num("tar.gasNormO","Norma: boshqa oylar","m³/oy")}</div><div class="rows" style="margin-top:8px">${tierRows("gasTiers","m³")}</div>
+    <div class="sub">Yoqilg'i va qozonlar</div><div class="grid">${num("tar.gasKwh","Gaz yonish issiqligi","kVt·s/m³")}${num("tar.effGas","Gaz qozon FIK","%")}${num("tar.coalPrice","Ko'mir narxi","so'm/t")}${num("tar.coalKwh","Ko'mir issiqligi","kVt·s/kg")}${num("tar.effCoal","Ko'mir qozon FIK","%")}${num("tar.effEl","Elektr qozon FIK","%")}${num("tar.baseElec","Uyning boshqa elektr sarfi","kVt·s/oy")}${num("tar.baseGas","Oshxona gaz sarfi","m³/oy")}${num("tar.pGas","Gaz qozon narxi","so'm")}${num("tar.pCoal","Ko'mir qozon narxi","so'm")}${num("tar.pEl","Elektr qozon narxi","so'm")}</div>
+    <p class="note">Pog'onali tarif oylik iste'molga qo'llanadi: isitish xarajati = (uy sarfi + isitish) hisobi − uy sarfi hisobi. Gaz normasi ichida 1 100 so'm/m³, normadan ortig'i yuqori pog'onalarda. Tarif o'zgarsa, shu yerda yangilang.</p>`),
+  ].join("");
+  $("#catTxt").value="";
+}
+
+/* ===================== HISOB-KITOB ===================== */
+const nz=v=>(v==null||v===""||!isFinite(+v))?0:+v;
+function wallU(w){ const m=WALLMAT[w.mat]||WALLMAT.gisht_pishiq; const ins=INS[w.ins]||INS.none; let R=0.13+0.04+0.04+nz(w.th)/100/m[1]; if(ins[1]>0) R+=nz(w.insTh)/100/ins[1]; return 1/R; }
+function layerR(base,ins,th){ let R=base; const I=INS[ins]||INS.none; if(I[1]>0) R+=nz(th)/100/I[1]; return R; }
+
+function calc(){
+  const r=REG[S.region]||REG.toshkent_sh;
+  const Ti=nz(S.ti)||20, Te=(S.teOv===null||S.teOv===""||S.teOv==null)?r.te:+S.teOv, dT=Ti-Te;
+  const L=nz(S.bld.len), W=nz(S.bld.wid), F=Math.max(1,Math.round(nz(S.bld.floors))), H=nz(S.bld.h);
+  const areaOv=nz(S.bld.area)>0?nz(S.bld.area):0, perOv=nz(S.bld.perim)>0?nz(S.bld.perim):0;
+  const heated=areaOv||L*W*F, foot=heated/F, perim=perOv||2*(L+W), wallGross=perim*H*F, vol=heated*H;
+  const els=[];
+  // derazalar va eshiklar
+  let winA=0, doorA=0;
+  S.windows.forEach((w,i)=>{ const t=WIN[w.type]||WIN.pvx1; const A=nz(w.w)*nz(w.h)*nz(w.n); winA+=A; if(A>0) els.push({g:"Derazalar",name:t[0],A,U:t[1],b:1}); w._A=A; });
+  S.doors.forEach(d=>{ const t=DOOR[d.type]||DOOR.met_i; const loc=DOORLOC[d.loc]||DOORLOC.tashqi; const A=nz(d.w)*nz(d.h)*nz(d.n); doorA+=A; if(A>0) els.push({g:"Eshiklar",name:t[0]+(loc[1]<1?" (isitilmaydigan xonaga)":""),A,U:t[1],b:loc[1]}); });
+  // devorlar
+  const given=S.walls.reduce((s,w)=>s+(w.area!=null&&w.area!==""?nz(w.area):0),0);
+  const blanks=S.walls.filter(w=>w.area==null||w.area==="").length;
+  const share=blanks?Math.max(0,wallGross-given)/blanks:0;
+  const gross=S.walls.map(w=>(w.area!=null&&w.area!=="")?nz(w.area):share);
+  const gSum=gross.reduce((a,b)=>a+b,0); const openF=gSum>0?Math.min(0.95,(winA+doorA)/gSum):0;
+  S.walls.forEach((w,i)=>{ const U=wallU(w); w._U=U; const A=gross[i]*(1-openF); w._A=A; if(A>0){ const m=WALLMAT[w.mat]; const ins=INS[w.ins]; els.push({g:"Devorlar",name:`${m[0]} ${fmt(nz(w.th))} sm`+(ins&&ins[1]>0&&nz(w.insTh)>0?` + ${ins[0].toLowerCase()} ${fmt(nz(w.insTh))} sm`:""),A,U,b:1}); } });
+  // tom
+  const rt=ROOFT[S.roof.type]||ROOFT.cherdak; const roofR=0.10+0.04+layerR((ROOFB[S.roof.base]||ROOFB.temirbeton)[1],S.roof.ins,S.roof.insTh); const roofU=1/roofR;
+  let skyA=0; S.skylights.forEach(w=>{ const t=SKY[w.type]||SKY.mans2; const A=nz(w.w)*nz(w.h)*nz(w.n); w._A=A; skyA+=A; if(A>0) els.push({g:"Lomboz",name:t[0],A,U:t[1],b:1}); });
+  const roofGross=S.roof.type==="mansard"?foot*1.15:foot; const roofA=Math.max(0,roofGross-skyA);
+  if(rt[1]>0&&roofA>0) els.push({g:"Tom / shift",name:rt[0],A:roofA,U:roofU,b:rt[1]});
+  // pol
+  const ft=FLOORT[S.floor.type]||FLOORT.grunt; const Rf=layerR((FLOORB[S.floor.base]||FLOORB.beton)[1],S.floor.ins,S.floor.insTh); let floorU;
+  if(S.floor.type==="grunt"){ const B=perim>0?foot/(0.5*perim):1, lg=2.0, wt=nz(S.walls[0]?.th)/100||0.3; const dt=wt+lg*(0.17+Rf+0.04); floorU=dt<B? 2*lg/(Math.PI*B+dt)*Math.log(Math.PI*B/dt+1) : lg/(0.457*B+dt); }
+  else if(S.floor.type==="yertola") floorU=1/(0.17+Rf+0.17); else floorU=1/(0.17+Rf+0.04);
+  if(ft[1]>0) els.push({g:"Pol",name:ft[0]+(S.floor.type==="grunt"?" (ISO 13370)":""),A:foot,U:floorU,b:ft[1]});
+  // issiqlik ko'priklari
+  const envA=els.reduce((s,e)=>s+e.A,0), dU=+S.bridge||0.05;
+  els.push({g:"Issiqlik ko'priklari",name:`ΔU = ${String(dU).replace(".",",")} W/m²K × ${fmt(envA)} m²`,A:envA,U:dU,b:1,bridge:true});
+  els.forEach(e=>{ e.HT=e.A*e.U*e.b; e.Q=e.HT*dT; });
+  const HT=els.reduce((s,e)=>s+e.HT,0);
+  const n=+S.vent.n||0.5, hr=Math.min(0.95,nz(S.vent.hr)/100);
+  const HV=0.34*n*vol*0.85*(1-hr); // ichki hajm ≈ 0.85 × tashqi
+  const Qtr=HT*dT, Qv=HV*dT, Qheat=Qtr+Qv, Qdes=Qheat*(1+nz(S.margin)/100);
+  const dhwOn=!!S.dhw.on, persons=nz(S.dhw.persons), liters=nz(S.dhw.liters);
+  const dhwAllow=dhwOn?persons*250:0, Qtot=Qdes+dhwAllow;
+  const dhwYear=dhwOn? persons*liters*4.186*40/3600*365*1.1 : 0; const dhwM=MDAYS.map(d=>dhwYear*d/365);
+  // bin usuli: har oy uchun soatlik harorat taqsimoti (σ = 5 K)
+  const Htot=HT+HV, Tbal=Ti-3; const bins=[];
+  HEAT_MI.forEach((mi,k)=>{ const Tm=r.m[k], hrs=MDAYS[mi]*24; const arr=[]; let sw=0; for(let T=Math.round(Tm-15);T<=Math.round(Tm+15);T++){ const w=Math.exp(-0.5*((T-Tm)/5)**2); arr.push([T,w]); sw+=w; } arr.forEach(([T,w])=>{ const h=hrs*w/sw; const load=Math.max(0,Htot*(Tbal-T))/1000; if(load>0) bins.push({mi,T,h,load}); }); });
+  const heatM=Array(12).fill(0); bins.forEach(b=>heatM[b.mi]+=b.load*b.h);
+  const heatYear=heatM.reduce((a,b)=>a+b,0);
+  // radiatorlar: kerakli suv harorati EN 442: Q = Qn·(ΔT/50)^n, issiqlik nasosi rejimi ΔT suv = 5 K
+  let rad=null, tfDes=(EMIT[S.emitter]||EMIT.rad)[1];
+  if(S.emitter==="rad"){
+    let q50=0, nw=0; S.rads.forEach(r=>{ const t=RADT[r.type]||RADT.alyumin; const per=nz(r.w)||t[1]; const cnt=nz(r.n)*(t[3]==="seksiya"?nz(r.sec):1); r._q=cnt*per; q50+=r._q; nw+=r._q*t[2]; });
+    const nexp=q50>0?nw/q50:1.3; const need=Qdes;
+    const outAt=sup=>q50*Math.pow(Math.max(0,(sup-2.5-Ti))/50,nexp);
+    let req=q50>0?Ti+50*Math.pow(need/q50,1/nexp)+2.5:99;
+    const over=req>75; const supply=Math.min(75,Math.max(35,Math.ceil(req)));
+    const avgSec=(()=>{ const r=S.rads.find(r=>(RADT[r.type]||RADT.alyumin)[3]==="seksiya"); return r?(nz(r.w)||(RADT[r.type]||RADT.alyumin)[1]):170; })();
+    const add55=Math.max(0,Math.ceil((need/Math.pow((55-2.5-Ti)/50,nexp)-q50)/avgSec)), add45=Math.max(0,Math.ceil((need/Math.pow((45-2.5-Ti)/50,nexp)-q50)/avgSec));
+    rad={q50,nexp,need,req,supply,over,out45:outAt(45),out55:outAt(55),out65:outAt(65),add55,add45,avgSec};
+    tfDes=q50>0?supply:55;
+  }
+  const tfAt=T=>Math.min(tfDes,Math.max(28,25+(tfDes-25)*(Ti-T)/Math.max(1,dT)));
+  const designLoad=T=>(Htot*(1+nz(S.margin)/100)*Math.max(0,Ti-T)+dhwAllow)/1000;
+  const ctx={r,Ti,Te,dT,tfDes,tfAt,designLoad,bins,heatM,heatYear,dhwM,dhwYear,Qtot};
+  const pumps=S.pumps.map((hp,i)=>evalHP(hp,i,ctx));
+  // tavsiya
+  const life=p=>p.capex+10*p.cost;
+  const pick=cls=>pumps.filter(p=>p.cls===cls).sort((a,b)=>life(a)-life(b))[0];
+  let rec=pick(0)||pick(1)||pumps.filter(p=>p.cls===2).sort((a,b)=>a.p7-b.p7)[0]||null;
+  pumps.sort((a,b)=>a.cls-b.cls||life(a)-life(b));
+  // buffer
+  let buf=null;
+  if(rec){ const perKw=rec.inv?10:20; const f=S.emitter==="pol"?0.7:1; let V=Math.max(30,Math.ceil(rec.p7*perKw*f/10)*10);
+    const tanks=S.tanks.map((t,i)=>({...t,i,vol:nz(t.vol),price:nz(t.price)})).filter(t=>t.vol>0).sort((a,b)=>a.vol-b.vol);
+    const ok=tanks.find(t=>t.vol>=V); const tank=ok||tanks[tanks.length-1]||null;
+    buf={V,perKw,tank,enough:!!ok,big:tank&&tank.vol>V*3}; }
+  const cmpHP= S.compare==="auto"? rec : (pumps.find(p=>String(p.i)===String(S.compare))||rec);
+  const fuel=fuelCompare(ctx,cmpHP,buf);
+  return {rad,skyA,roofA,areaOv,perOv,r,Ti,Te,dT,L,W,F,H,foot,heated,perim,wallGross,vol,winA,doorA,els,HT,HV,Qtr,Qv,Qheat,Qdes,Qtot,dhwAllow,dhwYear,heatM,heatYear,tfDes,pumps,rec,buf,fuel,cmpHP,roofU,floorU,n,openF};
+}
+
+function evalHP(hp,i,c){
+  const isAir=hp.kind==="havo"; const p7=nz(hp.p7), c7=nz(hp.cop7)||3;
+  const pm7=isAir?(nz(hp.pm7)||p7*(hp.inv?0.85:0.7)):p7, cm7=isAir?(nz(hp.copm7)||c7*0.62):c7;
+  const tmin=isAir?((hp.tmin==null||hp.tmin==="")?-20:+hp.tmin):-99, tmax=nz(hp.tmax)||55;
+  const sP=(p7-pm7)/14, sC=(c7-cm7)/14;
+  const cap=(T,tf)=>{ if(T<tmin) return 0; let P=isAir?(T>=-7?pm7+sP*(T+7):pm7-0.5*sP*(-7-T)):p7; P=Math.max(0.35*p7,Math.min(1.25*p7,P)); return P*(1-0.008*(tf-35)); };
+  const cop=(T,tf)=>{ let C=isAir?(T>=-7?cm7+sC*(T+7):cm7-0.5*sC*(-7-T)):c7; C=Math.min(c7*1.45,C); C*=Math.min(1.15,1-0.025*(tf-35)); return Math.max(1.2,C); };
+  const flowOk=c.tfDes<=tmax;
+  const Pdes=cap(c.Te,c.tfDes); const cov=c.Qtot>0?Pdes*1000/c.Qtot:0;
+  let biv=null; for(let T=20;T>=c.Te-0.01;T-=0.5){ if(cap(T,c.tfAt(T))<c.designLoad(T)){ biv=T; break; } }
+  const elM=Array(12).fill(0), hpM=Array(12).fill(0), bkM=Array(12).fill(0);
+  c.bins.forEach(b=>{ const tf=c.tfAt(b.T); const P=flowOk?cap(b.T,tf):0; const out=Math.min(b.load,P); const bk=b.load-out; hpM[b.mi]+=out*b.h; bkM[b.mi]+=bk*b.h; elM[b.mi]+=(out>0?out/cop(b.T,tf):0)*b.h+bk*b.h; });
+  const copD=flowOk?cop(12,Math.min(tmax,52)):1; c.dhwM.forEach((q,mi)=>{ elM[mi]+=q/copD; });
+  const hpHeat=hpM.reduce((a,b)=>a+b,0), bkHeat=bkM.reduce((a,b)=>a+b,0), el=elM.reduce((a,b)=>a+b,0);
+  const share=c.heatYear>0?hpHeat/c.heatYear:0; const scop=el>0?(c.heatYear+c.dhwYear)/el:0;
+  const cost=elecIncr(elM); const backupKw=Math.max(0,c.Qtot/1000-Pdes);
+  let cls,verdict;
+  if(!flowOk){cls=4;verdict="Mos emas: suv harorati yetmaydi";}
+  else if(p7<=0){cls=4;verdict="Ma'lumot to'liq emas";}
+  else if(cov>1.6){cls=2;verdict="Ortiqcha katta";}
+  else if(cov>=0.95){cls=0;verdict="Mos keladi";}
+  else if(cov>=0.7&&share>=0.9){cls=1;verdict="Zaxira qizdirgich bilan mos";}
+  else {cls=3;verdict="Quvvati yetmaydi";}
+  return {i,name:hp.name||`Nasos ${i+1}`,kind:hp.kind,p7,c7,pm7,cm7,tmin,tmax,inv:!!hp.inv,price:nz(hp.price),capex:nz(hp.price)+nz(S.install),Pdes,cov,biv,share,scop,el,elM,hpM,bkM,bkHeat,cost,backupKw,cls,verdict,flowOk,copD,copDes:cop(c.Te,c.tfDes)};
+}
+function tierCost(x,tiers){ let c=0,prev=0; for(const [lim,p] of tiers){ const Lm=(lim==null||lim==="")?Infinity:+lim; if(x>prev) c+=(Math.min(x,Lm)-prev)*nz(p); prev=Lm; if(x<=Lm) break; } return c; }
+function elecBill(k){ return tierCost(k,S.tar.elec); }
+function elecIncr(arr){ const b=nz(S.tar.baseElec); return arr.reduce((s,k,mi)=>s+elecBill(b+k)-elecBill(b),0); }
+function gasBill(v,mi){ const T=S.tar; const norm=GAS_WINTER.includes(mi)?nz(T.gasNormW):nz(T.gasNormO); let c=Math.min(v,norm)*nz(T.gasNormP); if(v>norm) c+=tierCost(v,[[norm,0],...T.gasTiers]); return c; }
+function fuelCompare(c,hp,buf){
+  const T=S.tar; const qM=c.heatM.map((h,mi)=>h+c.dhwM[mi]); const Q=qM.reduce((a,b)=>a+b,0);
+  const gasM=qM.map(q=>q/(nz(T.gasKwh)*nz(T.effGas)/100||1)); const gasV=gasM.reduce((a,b)=>a+b,0);
+  const gasCost=gasM.reduce((s,v,mi)=>s+gasBill(nz(T.baseGas)+v,mi)-gasBill(nz(T.baseGas),mi),0);
+  const elM=qM.map(q=>q/(nz(T.effEl)/100||1)); const elK=elM.reduce((a,b)=>a+b,0); const elCost=elecIncr(elM);
+  const coalKg=Q/(nz(T.coalKwh)*nz(T.effCoal)/100||1); const coalCost=coalKg/1000*nz(T.coalPrice);
+  const rows=[
+    {k:"gas",name:"Gaz qozon",qty:`${fmt(gasV)} m³`,cost:gasCost,capex:nz(T.pGas),eff:`FIK ${fmt(nz(T.effGas))}%`},
+    {k:"coal",name:"Ko'mir qozon",qty:`${fmt(coalKg/1000,1)} t`,cost:coalCost,capex:nz(T.pCoal),eff:`FIK ${fmt(nz(T.effCoal))}%`},
+    {k:"el",name:"Elektr qozon",qty:`${fmt(elK)} kVt·s`,cost:elCost,capex:nz(T.pEl),eff:`FIK ${fmt(nz(T.effEl))}%`},
+  ];
+  if(hp){ rows.unshift({k:"hp",name:"Issiqlik nasosi",sub:hp.name,qty:`${fmt(hp.el)} kVt·s`,cost:hp.cost,capex:hp.capex+(buf&&buf.tank?buf.tank.price:0),eff:`SCOP ${fmt(hp.scop,2)}`}); }
+  rows.forEach(r=>{ r.perKwh=Q>0?r.cost/Q:0; r.ten=r.capex+10*r.cost; });
+  const h=rows.find(r=>r.k==="hp"); if(h) rows.forEach(r=>{ if(r.k!=="hp"){ const sav=r.cost-h.cost, extra=h.capex-r.capex; r.payback= sav>0? Math.max(0,extra/sav):null; r.save=sav; } });
+  return {rows,Q,gasV,elK,coalKg};
+}
+
+/* ===================== NATIJALAR ===================== */
+let LAST=null;
+function render(){
+  const R=calc(); LAST=R;
+  $("#regInfo").textContent=`${R.r.n}: hisobiy tashqi harorat ${fmt(R.Te)}°C · isitish davri ${R.r.d} kun, o'rtacha ${fmt(R.r.tp,1)}°C · ΔT = ${fmt(R.dT)} K`;
+  $("#geoInfo").textContent=`Jami maydon ${fmt(R.heated,1)} m²${R.areaOv?" (kiritilgan)":""} · 1 qavat ${fmt(R.foot,1)} m² · hajm ${fmt(R.vol)} m³ · tashqi devorlar uzunligi ${fmt(R.perim,1)} m${R.perOv?" (kiritilgan)":""} · devorlar maydoni (yalpi) ${fmt(R.wallGross,1)} m²`;
+  $("#roofInfo").textContent=`U = ${fmt(R.roofU,2)} W/m²K · maydon ${fmt(R.roofA,1)} m²${R.skyA>0?` (lomboz ${fmt(R.skyA,1)} m² ayirilgan)`:""}`;
+  S.skylights.forEach((w,i)=>{ const e=$("#a-sky-"+i); if(e) e.textContent=`${fmt(w._A,1)} m²`; });
+  if(R.rad){ S.rads.forEach((r,i)=>{ const e=$("#q-rad-"+i); if(e) e.textContent=`${fmt(r._q)} W`; }); const ri=$("#radInfo"); if(ri) ri.textContent=R.rad.q50>0?`Radiatorlar nominal quvvati ${fmt(R.rad.q50)} W (ΔT50) · kerak ${fmt(R.rad.need)} W → suv harorati kamida ${fmt(R.rad.req,1)}°C${R.rad.over?" — radiatorlar yetmaydi!":""}`:"Radiatorlar kiritilmagan — 55°C qabul qilindi"; }
+  $("#floorInfo").textContent=`U = ${fmt(R.floorU,2)} W/m²K · maydon ${fmt(R.foot,1)} m²`;
+  S.walls.forEach((w,i)=>{ const e=$("#u-wall-"+i); if(e) e.textContent=`U = ${fmt(w._U,2)} W/m²K · sof maydon (deraza/eshiksiz) ${fmt(w._A,1)} m²`; });
+  S.windows.forEach((w,i)=>{ const e=$("#a-win-"+i); if(e) e.textContent=`${fmt(w._A,1)} m²`; });
+  const kW=R.Qtot/1000, spec=R.heated>0?R.Qdes/R.heated:0;
+  const grp={}; R.els.forEach(e=>{ grp[e.g]=(grp[e.g]||0)+e.Q; }); grp["Havo almashinuvi"]=R.Qv;
+  const gl=Object.entries(grp); const gmax=Math.max(...gl.map(g=>g[1]),1);
+  const rec=R.rec;
+  const pillCls=c=>["ok","warn","info","bad","bad"][c];
+  let html=`<section class="sec"><div class="kpis">
+    <div class="kpi main"><b>${fmt(kW,1)} kVt</b><span>Hisobiy issiqlik yuklamasi${R.dhwAllow?" (issiq suv bilan)":""}</span></div>
+    <div class="kpi"><b>${fmt(spec)}</b><span>W/m² solishtirma yo'qotish</span></div>
+    <div class="kpi"><b>${fmt(R.heatYear+R.dhwYear)}</b><span>kVt·s/yil issiqlik ehtiyoji</span></div>
+    <div class="kpi"><b>${fmt(R.heated,1)}</b><span>m² jami isitiladigan maydon</span></div></div>
+    <p class="note">Transmissiya ${fmt(R.Qtr/1000,2)} kVt + ventilyatsiya ${fmt(R.Qv/1000,2)} kVt = ${fmt(R.Qheat/1000,2)} kVt; zaxira ${fmt(nz(S.margin))}% → ${fmt(R.Qdes/1000,2)} kVt${R.dhwAllow?`; issiq suv uchun +${fmt(R.dhwAllow/1000,2)} kVt`:""}. ${spec>150?"Yo'qotish yuqori — avval izolyatsiya va derazalarni yaxshilash nasos narxini kamaytiradi.":spec<60?"Bino yaxshi izolyatsiyalangan.":"Yo'qotish o'rtacha darajada."}</p></section>`;
+  // tavsiya
+  if(rec){ const b=R.buf; html+=`<section class="rec"><span class="pill ${pillCls(rec.cls)}">Tavsiya</span><h3 style="margin-top:6px">${esc(rec.name)}</h3>
+    <p class="why">${fmt(R.Te)}°C da ${fmt(rec.Pdes,1)} kVt beradi — ehtiyojning ${fmt(rec.cov*100)}% i. Yillik issiqlikning ${fmt(rec.share*100)}% ini nasos qoplaydi, mavsumiy COP ${fmt(rec.scop,2)}.</p><ul>
+    ${rec.biv!=null?`<li>Bivalent nuqta: ${fmt(rec.biv,1)}°C — undan sovuqda zaxira qizdirgich ${fmt(rec.backupKw,1)} kVt kerak.</li>`:`<li>Hisobiy haroratgacha zaxira qizdirgichsiz ishlaydi.</li>`}
+    ${b?`<li>Buffer tank: kamida ${fmt(b.V)} L (${b.perKw} L/kVt). ${b.tank?`Tanlov: <b>${esc(b.tank.name)}</b> — ${fmt(b.tank.vol)} L${b.enough?"":" (yetarli emas, kattaroq tank kerak)"}${b.big?" (ortiqcha katta, isish sekinlashadi)":""}.`:"Katalogda buffer tank yo'q."}</li>`:""}
+    <li>Yillik elektr: ${fmt(rec.el)} kVt·s · isitish xarajati ≈ ${som(rec.cost)}/yil</li></ul></section>`; }
+  else html+=`<section class="rec"><span class="pill bad">Mos nasos topilmadi</span><p class="why">Katalogdagi nasoslarning hech biri ${fmt(kW,1)} kVt yuklamani yoki ${fmt(R.tfDes)}°C suv haroratini qoplay olmaydi. Kattaroq nasos qo'shing yoki isitish asboblarini past haroratliga almashtiring.</p></section>`;
+  if(R.rad){ const d=R.rad; const st=d.q50<=0?["bad","Radiatorlar kiritilmagan"]:d.over?["bad","Radiatorlar yetmaydi"]:d.req>60?["warn","Yuqori harorat kerak"]:d.req>50?["info","O'rtacha harorat"]:["ok","Issiqlik nasosi uchun qulay"];
+    html+=`<section class="sec"><h2><span class="n">R</span>Radiatorlar tekshiruvi<span class="hint"><span class="pill ${st[0]}">${st[1]}</span></span></h2>
+    <div class="tw"><table><tbody>
+    <tr><td>O'rnatilgan radiatorlar (nominal, ΔT 50 K)</td><td class="num">${fmt(d.q50)} W</td></tr>
+    <tr><td>Uy talab qiladigan quvvat (zaxira bilan, issiq suvsiz)</td><td class="num">${fmt(d.need)} W</td></tr>
+    <tr><td>Radiatorlar 45°C suvda beradi</td><td class="num">${fmt(d.out45)} W · ${fmt(d.out45/d.need*100)}%</td></tr>
+    <tr><td>Radiatorlar 55°C suvda beradi</td><td class="num">${fmt(d.out55)} W · ${fmt(d.out55/d.need*100)}%</td></tr>
+    <tr><td>Radiatorlar 65°C suvda beradi</td><td class="num">${fmt(d.out65)} W · ${fmt(d.out65/d.need*100)}%</td></tr>
+    <tr><td><b>Kerakli suv harorati (nasos chiqishi)</b></td><td class="num"><b>${d.q50>0?fmt(d.req,1)+"°C":"—"}</b></td></tr>
+    </tbody></table></div><p class="note">${d.over?`Radiatorlar 75°C da ham yetmaydi — radiator qo'shish shart. `:""}${d.add55>0?`Nasos 55°C da ishlashi uchun taxminan +${fmt(d.add55)} seksiya (${fmt(d.avgSec)} W) qo'shish kerak. `:"55°C yetarli. "}${d.add45>0?`45°C uchun +${fmt(d.add45)} seksiya kerak — past harorat nasosning COP ini oshiradi.`:"45°C da ham yetarli — nasos juda tejamli ishlaydi."}</p></section>`; }
+  // nasoslar jadvali
+  html+=`<section class="sec"><h2><span class="n">A</span>Issiqlik nasoslari solishtirmasi<span class="hint">Suv: ${fmt(R.tfDes)}°C · havo: ${fmt(R.Te)}°C</span></h2><div class="tw"><table><thead><tr><th>Nasos</th><th class="num">P (${fmt(R.Te)}°C)</th><th class="num">Qoplash</th><th class="num">Bivalent</th><th class="num">SCOP</th><th class="num">Elektr/yil</th><th class="num">Xarajat/yil</th><th>Holati</th></tr></thead><tbody>
+    ${R.pumps.map(p=>`<tr class="${rec&&p.i===rec.i?"best":""}"><td>${esc(p.name)}<div class="meta">${HPKIND[p.kind]||""} · ${fmt(p.p7,1)} kVt · ${som(p.price)}</div></td><td class="num">${fmt(p.Pdes,1)} kVt</td><td class="num">${fmt(p.cov*100)}%</td><td class="num">${p.biv!=null?fmt(p.biv,1)+"°C":"—"}</td><td class="num">${fmt(p.scop,2)}</td><td class="num">${fmt(p.el)}</td><td class="num">${fmt(p.cost)}</td><td><span class="pill ${pillCls(p.cls)}">${p.verdict}</span></td></tr>`).join("")}
+    </tbody></table></div><p class="note">Tanlov mezoni: mos keladiganlar orasida 10 yillik umumiy xarajati (narx + montaj + 10 × yillik elektr) eng kami. Qoplash 95–160% oralig'ida "mos" deb hisoblanadi.</p></section>`;
+  // yo'qotish tarkibi
+  html+=`<section class="sec"><h2><span class="n">B</span>Issiqlik yo'qotilishi tarkibi</h2>
+    <div style="display:grid;gap:6px;margin-bottom:14px">${gl.map(([g,q])=>`<div style="display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:12.5px"><span>${g}</span><div class="bar" style="width:${(q/gmax*100).toFixed(1)}%"></div><span class="num" style="text-align:right;font-family:var(--f-mono)">${fmt(q)} W · ${fmt(q/R.Qheat*100)}%</span></div>`).join("")}</div>
+    <div class="tw"><table><thead><tr><th>Element</th><th class="num">A, m²</th><th class="num">U, W/m²K</th><th class="num">b</th><th class="num">H, W/K</th><th class="num">Q, W</th></tr></thead><tbody>
+    ${R.els.map(e=>`<tr><td>${esc(e.g)}<div class="meta" style="white-space:normal">${esc(e.name)}</div></td><td class="num">${fmt(e.A,1)}</td><td class="num">${fmt(e.U,2)}</td><td class="num">${fmt(e.b,1)}</td><td class="num">${fmt(e.HT,1)}</td><td class="num">${fmt(e.Q)}</td></tr>`).join("")}
+    <tr><td>Havo almashinuvi<div class="meta">n = ${String(R.n).replace(".",",")} 1/soat · V = ${fmt(R.vol*0.85)} m³</div></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">${fmt(R.HV,1)}</td><td class="num">${fmt(R.Qv)}</td></tr>
+    <tr><td><b>Jami</b></td><td></td><td></td><td></td><td class="num"><b>${fmt(R.HT+R.HV,1)}</b></td><td class="num"><b>${fmt(R.Qheat)}</b></td></tr></tbody></table></div></section>`;
+  // yoqilg'i solishtirmasi
+  const F=R.fuel; const cmax=Math.max(...F.rows.map(r=>r.cost),1);
+  const cmpOpts=`<option value="auto"${S.compare==="auto"?" selected":""}>Tavsiya etilgan nasos</option>`+S.pumps.map((p,i)=>`<option value="${i}"${String(S.compare)===String(i)?" selected":""}>${esc(p.name)}</option>`).join("");
+  html+=`<section class="sec"><h2><span class="n">C</span>Gaz, ko'mir va elektr qozonlari bilan solishtirma</h2>
+    <label class="f" for="f-compare" style="max-width:340px;margin-bottom:12px"><span>Solishtiriladigan nasos</span><div class="in"><select id="f-compare" data-path="compare" data-t="s">${cmpOpts}</select></div></label>
+    <div style="display:grid;gap:8px;margin-bottom:14px">${F.rows.map(r=>`<div style="display:grid;grid-template-columns:120px 1fr 140px;gap:10px;align-items:center;font-size:12.5px"><span>${r.name}</span><div class="bar" style="width:${(r.cost/cmax*100).toFixed(1)}%;height:14px;background:${r.k==="hp"?"var(--accent)":"var(--heat)"};opacity:${r.k==="hp"?1:0.75}"></div><span style="text-align:right;font-family:var(--f-mono)">${fmt(r.cost)} so'm</span></div>`).join("")}</div>
+    <div class="tw"><table><thead><tr><th>Tizim</th><th class="num">Sarf/yil</th><th class="num">Xarajat/yil</th><th class="num">1 kVt·s issiqlik</th><th class="num">Uskuna</th><th class="num">10 yil jami</th><th class="num">Nasos o'zini qoplashi</th></tr></thead><tbody>
+    ${F.rows.map(r=>`<tr class="${r.k==="hp"?"best":""}"><td>${r.name}<div class="meta">${r.sub?esc(r.sub)+" · ":""}${r.eff}</div></td><td class="num">${r.qty}</td><td class="num">${fmt(r.cost)}</td><td class="num">${fmt(r.perKwh,1)}</td><td class="num">${fmt(r.capex)}</td><td class="num">${fmt(r.ten)}</td><td class="num">${r.k==="hp"?"—":r.payback==null?"tejamaydi":r.payback>30?"30+ yil":fmt(r.payback,1)+" yil"}</td></tr>`).join("")}
+    </tbody></table></div><p class="note">Yillik issiqlik ehtiyoji ${fmt(F.Q)} kVt·s (isitish + issiq suv). Xarajatlar so'mda, pog'onali tarif bo'yicha oyma-oy hisoblangan. Nasos narxiga montaj va buffer tank qo'shilgan.</p></section>`;
+  // oylik
+  const hp=R.cmpHP;
+  if(hp){ const ms=HEAT_MI; const mx=Math.max(...ms.map(mi=>R.heatM[mi]),1); const W=560,Hh=170,bw=W/ms.length;
+    html+=`<section class="sec"><h2><span class="n">D</span>Oylar bo'yicha isitish ehtiyoji<span class="hint">${esc(hp.name)}</span></h2>
+    <svg class="chart" viewBox="0 0 ${W} ${Hh+28}" width="100%" role="img" aria-label="Oylik isitish ehtiyoji">
+      ${[0,0.5,1].map(f=>`<line x1="0" x2="${W}" y1="${Hh-f*Hh*0.9}" y2="${Hh-f*Hh*0.9}" stroke="var(--line)" stroke-width="1"/>`).join("")}
+      ${ms.map((mi,k)=>{ const h1=hp.hpM[mi]/mx*Hh*0.9, h2=hp.bkM[mi]/mx*Hh*0.9; const x=k*bw+bw*0.18, w=bw*0.64; return `<rect x="${x}" y="${Hh-h1}" width="${w}" height="${h1}" fill="var(--accent)" rx="2"/><rect x="${x}" y="${Hh-h1-h2}" width="${w}" height="${h2}" fill="var(--heat)" rx="2"/><text x="${x+w/2}" y="${Hh-h1-h2-5}" text-anchor="middle">${fmt(R.heatM[mi])}</text><text x="${x+w/2}" y="${Hh+16}" text-anchor="middle">${MONTHS[mi].slice(0,3)}</text>`; }).join("")}
+    </svg><div class="legend"><span><i style="background:var(--accent)"></i>Nasos beradigan issiqlik, kVt·s</span><span><i style="background:var(--heat)"></i>Zaxira qizdirgich</span></div>
+    <div class="tw" style="margin-top:10px"><table><thead><tr><th>Oy</th><th class="num">O'rt. harorat</th><th class="num">Issiqlik, kVt·s</th><th class="num">Nasos elektr, kVt·s</th><th class="num">Nasos xarajati</th><th class="num">Gaz, m³</th></tr></thead><tbody>
+    ${ms.map((mi,k)=>{ const b=nz(S.tar.baseElec); const q=R.heatM[mi]+(R.dhwYear*MDAYS[mi]/365); const gv=q/(nz(S.tar.gasKwh)*nz(S.tar.effGas)/100||1); return `<tr><td>${MONTHS[mi]}</td><td class="num">${fmt(R.r.m[k],1)}°C</td><td class="num">${fmt(R.heatM[mi])}</td><td class="num">${fmt(hp.elM[mi])}</td><td class="num">${fmt(elecBill(b+hp.elM[mi])-elecBill(b))}</td><td class="num">${fmt(gv)}</td></tr>`; }).join("")}
+    </tbody></table></div></section>`; }
+  html+=`<p class="note on-bg" style="padding:0 4px">Hisob EN 12831 soddalashtirilgan usuli, ISO 13370 (gruntdagi pol) va oylik bin usulida bajarilgan. Hisobiy harorat va isitish davri — SNiP 23-01-99 (eng sovuq besh kunlik), oylik haroratlar — taxminiy iqlim me'yorlari; kerak bo'lsa hisobiy haroratni qo'lda kiriting. Radiatorlar EN 442 bo'yicha. Nasos ko'rsatkichlari pasport nuqtalari orasida interpolyatsiya qilinadi.</p>`;
+  $("#results").innerHTML=html;
+  persist();
+}
+
+/* ===================== HODISALAR ===================== */
+document.addEventListener("input",e=>{ const el=e.target; if(!el.dataset||!el.dataset.path) return; const t=el.dataset.t; let v=t==="n"?(el.value===""?null:+el.value):t==="b"?el.checked:el.value;
+  // tarif chegaralari: indeks satr kalit emas
+  setP(el.dataset.path,v); if(el.tagName==="SELECT"&&(/^pumps\.\d+\.kind$/.test(el.dataset.path)||/^rads\.\d+\.type$/.test(el.dataset.path)||el.dataset.path==="emitter")){ if(/^rads\.\d+\.type$/.test(el.dataset.path)) setP(el.dataset.path.replace(/type$/,"w"),null); renderInputs(); } render(); });
+document.addEventListener("change",e=>{ const el=e.target; if(el.dataset&&el.dataset.path&&(el.type==="checkbox"||el.tagName==="SELECT")){ /* input hodisasi allaqachon ishladi */ } });
+document.addEventListener("click",async e=>{
+  const a=e.target.closest("[data-add]"), d=e.target.closest("[data-del]");
+  if(a){ const k=a.dataset.add; const tpl={walls:{mat:"gazoblok",th:30,ins:"none",insTh:0,area:null},windows:{type:"pvx2",w:1.2,h:1.5,n:1},doors:{type:"met_i",loc:"tashqi",w:0.9,h:2.1,n:1},pumps:{name:"Yangi nasos",kind:"havo",p7:8,cop7:4.5,pm7:null,copm7:null,tmin:-20,tmax:55,inv:true,price:0},tanks:{name:"Buffer tank",vol:100,price:0},skylights:{type:"mans2",w:0.78,h:1.18,n:1},rads:{type:"bimetall",n:1,sec:10,w:null}}[k]; S[k].push(JSON.parse(JSON.stringify(tpl))); renderInputs(); render(); }
+  if(d){ const [k,i]=d.dataset.del.split("."); S[k].splice(+i,1); if(String(S.compare)!=="auto") S.compare="auto"; renderInputs(); render(); }
+  if(e.target.id==="catCopy"){ const j=JSON.stringify({pumps:S.pumps,tanks:S.tanks}); const ta=$("#catTxt"); ta.value=j; try{ await navigator.clipboard.writeText(j); toast("Katalog nusxalandi"); }catch(err){ ta.select(); toast("Matnni belgilab, Ctrl+C bosing"); } }
+  if(e.target.id==="catApply"){ try{ const j=JSON.parse($("#catTxt").value); if(!Array.isArray(j.pumps)) throw 0; S.pumps=j.pumps; S.tanks=Array.isArray(j.tanks)?j.tanks:S.tanks; S.compare="auto"; renderInputs(); render(); toast("Katalog qo'llandi"); }catch(err){ toast("Matn noto'g'ri: avval 'Katalogni nusxalash' orqali olingan matnni joylang"); } }
+  if(e.target.id==="btnReset"){ if(e.target.dataset.armed){ S=DEFAULT(); renderInputs(); render(); toast("Namuna ma'lumotlari tiklandi"); delete e.target.dataset.armed; e.target.textContent="Namunaga qaytarish"; } else { e.target.dataset.armed="1"; e.target.textContent="Tasdiqlash: hammasi o'chadi"; setTimeout(()=>{ if(e.target.dataset.armed){ delete e.target.dataset.armed; e.target.textContent="Namunaga qaytarish"; } },4000); } }
+  if(e.target.id==="btnPdf") downloadPdf();
+});
+
+/* ===================== PDF ===================== */
+const P=t=>String(t??"").replace(/[ʻʼ‘’`]/g,"'").replace(/[−–—]/g,"-").replace(/≈/g,"~").replace(/≥/g,">=").replace(/≤/g,"<=").replace(/λ/g,"lambda").replace(/Δ/g,"d").replace(/·/g,"·").replace(/[  ]/g," ").replace(/[^\x20-\x7E\xB0\xB2\xB3\xB7\xD7\n]/g,"");
+function buildPdf(){
+  const R=LAST; const { jsPDF }=window.jspdf; const doc=new jsPDF({unit:"mm",format:"a4"});
+  const AC=[44,95,174], HE=[201,88,42]; const Wd=210, M=14; let y;
+  const tbl=(head,body,opt={})=>{ doc.autoTable(Object.assign({head:[head.map(P)],body:body.map(r=>r.map(P)),startY:y,margin:{left:M,right:M},styles:{fontSize:8,cellPadding:1.6,textColor:[30,40,38],lineColor:[214,223,220],lineWidth:0.1},headStyles:{fillColor:AC,textColor:255,fontStyle:"bold"},alternateRowStyles:{fillColor:[244,248,247]},theme:"grid"},opt)); y=doc.lastAutoTable.finalY+6; };
+  const h2=t=>{ if(y>265){doc.addPage();y=18;} doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.setTextColor(...AC); doc.text(P(t),M,y); y+=4; doc.setTextColor(30,40,38); };
+  doc.setFillColor(70,119,189); doc.rect(0,0,Wd,34,"F"); doc.setFillColor(58,106,179); doc.circle(Wd+6,-4,30,"F");
+  try{ doc.addImage(document.querySelector(".brand img").src,"PNG",Wd-M-34,9,34,12.8); }catch(e){}
+  doc.setTextColor(255); doc.setFont("helvetica","bold"); doc.setFontSize(14);
+  doc.text(P("Issiqlik yo'qotilishi va issiqlik nasosi"),M,13); doc.text(P("tanlash hisoboti"),M,19.5); doc.setFont("helvetica","normal"); doc.setFontSize(9);
+  const dt=new Date(); const ds=`${String(dt.getDate()).padStart(2,"0")}.${String(dt.getMonth()+1).padStart(2,"0")}.${dt.getFullYear()}`;
+  doc.text(P(`Sana: ${ds}   ·   Hudud: ${R.r.n}   ·   Hisobiy tashqi harorat: ${fmt(R.Te)}°C`),M,26);
+  if(S.client.preparer) doc.text(P(`Tayyorladi: ${S.client.preparer}`),M,30.5);
+  y=42; doc.setTextColor(30,40,38);
+  tbl(["Mijoz","Telefon","Manzil"],[[S.client.name||"-",S.client.phone||"-",S.client.address||"-"]]);
+  // asosiy natijalar
+  h2("Asosiy natijalar");
+  const kp=[["Hisobiy issiqlik yuklamasi",`${fmt(R.Qtot/1000,2)} kVt`],["Solishtirma yo'qotish",`${fmt(R.heated>0?R.Qdes/R.heated:0)} W/m²`],["Yillik issiqlik ehtiyoji (isitish + issiq suv)",`${fmt(R.heatYear+R.dhwYear)} kVt·s`],["Uyning jami maydoni / hajmi",`${fmt(R.heated,1)} m² / ${fmt(R.vol)} m³`],["Qavatlar / qavat balandligi",`${R.F} / ${fmt(R.H,2)} m`],["Tashqi devorlar uzunligi / maydoni",`${fmt(R.perim,1)} m / ${fmt(R.wallGross,1)} m²`],["Ichki / tashqi hisobiy harorat",`${fmt(R.Ti)}°C / ${fmt(R.Te)}°C`],["Isitish tizimi",S.emitter==="rad"?`Radiatorlar, suv ${fmt(R.tfDes)}°C`:(EMIT[S.emitter]||EMIT.pol)[0]]];
+  tbl(["Ko'rsatkich","Qiymat"],kp,{columnStyles:{1:{halign:"right",fontStyle:"bold"}}});
+  // tavsiya
+  h2("Tavsiya");
+  doc.setFont("helvetica","normal"); doc.setFontSize(9);
+  let lines=[];
+  if(R.rec){ const p=R.rec,b=R.buf; lines.push(`Issiqlik nasosi: ${p.name} (${HPKIND[p.kind]}, ${fmt(p.p7,1)} kVt). Holati: ${p.verdict}.`);
+    lines.push(`${fmt(R.Te)}°C da quvvati ${fmt(p.Pdes,1)} kVt - ehtiyojning ${fmt(p.cov*100)}%. Yillik issiqlikning ${fmt(p.share*100)}% ini nasos qoplaydi, mavsumiy COP ${fmt(p.scop,2)}.`);
+    lines.push(p.biv!=null?`Bivalent nuqta ${fmt(p.biv,1)}°C; undan sovuqda ${fmt(p.backupKw,1)} kVt zaxira elektr qizdirgich kerak.`:"Hisobiy haroratgacha zaxira qizdirgichsiz ishlaydi.");
+    if(b) lines.push(`Buffer tank: kamida ${fmt(b.V)} L. Tanlangan: ${b.tank?`${b.tank.name} (${fmt(b.tank.vol)} L)${b.enough?"":" - yetarli emas, kattaroq tank kerak"}`:"katalogda tank yo'q"}.`);
+    lines.push(`Yillik elektr sarfi ${fmt(p.el)} kVt·s, isitish xarajati ~ ${fmt(p.cost)} so'm/yil.`); }
+  else lines.push("Katalogdagi nasoslarning hech biri talabni qoplamaydi. Kattaroq quvvatli nasos yoki past haroratli isitish tizimi tavsiya etiladi.");
+  lines.forEach(l=>{ const sp=doc.splitTextToSize(P("• "+l),Wd-2*M); doc.text(sp,M,y+1); y+=sp.length*4.2; }); y+=4;
+  h2("Issiqlik nasoslari solishtirmasi");
+  tbl(["Nasos","Turi","P nom.","P hisobiy","Qoplash","Bivalent","SCOP","Elektr/yil","Xarajat/yil","Holati"],R.pumps.map(p=>[p.name,HPKIND[p.kind]||"",fmt(p.p7,1)+" kVt",fmt(p.Pdes,1)+" kVt",fmt(p.cov*100)+"%",p.biv!=null?fmt(p.biv,1)+"°C":"-",fmt(p.scop,2),fmt(p.el),fmt(p.cost),p.verdict]),{styles:{fontSize:7,cellPadding:1.4},didParseCell:d=>{ if(d.section==="body"&&R.rec&&R.pumps[d.row.index].i===R.rec.i) d.cell.styles.fillColor=[220,239,235]; }});
+  h2("Issiqlik yo'qotilishi hisobi");
+  tbl(["Element","Tavsif","A, m²","U, W/m²K","b","H, W/K","Q, W"],[...R.els.map(e=>[e.g,e.name,fmt(e.A,1),fmt(e.U,2),fmt(e.b,1),fmt(e.HT,1),fmt(e.Q)]),["Havo almashinuvi",`n = ${R.n} 1/soat, V = ${fmt(R.vol*0.85)} m³`,"-","-","-",fmt(R.HV,1),fmt(R.Qv)],["Jami","","","","",fmt(R.HT+R.HV,1),fmt(R.Qheat)],[`Zaxira ${fmt(nz(S.margin))}%${R.dhwAllow?" + issiq suv":""}`,"","","","","",fmt(R.Qtot)]],{styles:{fontSize:7.5,cellPadding:1.4},columnStyles:{2:{halign:"right"},3:{halign:"right"},4:{halign:"right"},5:{halign:"right"},6:{halign:"right"}}});
+  if(R.rad&&R.rad.q50>0){ h2("Radiatorlar"); const d=R.rad;
+    tbl(["Turi","Soni","Seksiya","1 seksiya/dona, W","Jami (dT50), W"],[...S.rads.map(r=>{const t=RADT[r.type]||RADT.alyumin; const isS=t[3]==="seksiya"; return [t[0],fmt(nz(r.n)),isS?fmt(nz(r.sec)):"-",fmt(nz(r.w)||t[1]),fmt(r._q)];}),["Jami","","","",fmt(d.q50)]]);
+    doc.setFontSize(8.5); const sp=doc.splitTextToSize(P(`Talab: ${fmt(d.need)} W. Radiatorlar beradi: 45°C da ${fmt(d.out45)} W, 55°C da ${fmt(d.out55)} W, 65°C da ${fmt(d.out65)} W. Kerakli suv harorati ${fmt(d.req,1)}°C.${d.add55>0?` 55°C da ishlash uchun ~${fmt(d.add55)} seksiya qo'shish kerak.`:""}`),Wd-2*M); doc.text(sp,M,y); y+=sp.length*4+4; }
+  h2("Derazalar, lombozlar va eshiklar");
+  tbl(["Turi","O'lcham","Soni","Maydon, m²","U"],[...S.windows.map(w=>{const t=WIN[w.type]||WIN.pvx1; return [t[0],`${fmt(nz(w.w),2)} x ${fmt(nz(w.h),2)} m`,fmt(nz(w.n)),fmt(nz(w.w)*nz(w.h)*nz(w.n),1),fmt(t[1],1)];}),...S.skylights.map(w=>{const t=SKY[w.type]||SKY.mans2; return ["Lomboz: "+t[0],`${fmt(nz(w.w),2)} x ${fmt(nz(w.h),2)} m`,fmt(nz(w.n)),fmt(nz(w.w)*nz(w.h)*nz(w.n),1),fmt(t[1],1)];}),...S.doors.map(d=>{const t=DOOR[d.type]||DOOR.met_i; return [t[0]+" ("+(DOORLOC[d.loc]||DOORLOC.tashqi)[0].toLowerCase()+")",`${fmt(nz(d.w),2)} x ${fmt(nz(d.h),2)} m`,fmt(nz(d.n)),fmt(nz(d.w)*nz(d.h)*nz(d.n),1),fmt(t[1],1)];})]);
+  h2("Gaz, ko'mir va elektr qozonlari bilan solishtirma");
+  tbl(["Tizim","Sarf/yil","Xarajat/yil, so'm","1 kVt·s, so'm","Uskuna, so'm","10 yil jami, so'm","Nasos qoplashi"],R.fuel.rows.map(r=>[r.name+(r.sub?` (${r.sub})`:""),r.qty,fmt(r.cost),fmt(r.perKwh,1),fmt(r.capex),fmt(r.ten),r.k==="hp"?"-":r.payback==null?"tejamaydi":r.payback>30?"30+ yil":fmt(r.payback,1)+" yil"]),{styles:{fontSize:7.5,cellPadding:1.4}});
+  // bar chart
+  if(y>240){doc.addPage();y=18;}
+  const cmax=Math.max(...R.fuel.rows.map(r=>r.cost),1); doc.setFontSize(8);
+  R.fuel.rows.forEach(r=>{ doc.setTextColor(30,40,38); doc.text(P(r.name),M,y+3); const w=(Wd-2*M-75)*(r.cost/cmax); doc.setFillColor(...(r.k==="hp"?AC:HE)); doc.rect(M+38,y,Math.max(0.5,w),4,"F"); doc.text(P(fmt(r.cost)+" so'm"),M+40+w,y+3); y+=6.5; }); y+=4;
+  if(R.cmpHP){ h2(`Oylik hisob (${R.cmpHP.name})`); const b=nz(S.tar.baseElec);
+    tbl(["Oy","O'rt. harorat","Issiqlik, kVt·s","Nasos elektr, kVt·s","Nasos xarajati, so'm","Zaxira issiqlik, kVt·s"],HEAT_MI.map((mi,k)=>[MONTHS[mi],fmt(R.r.m[k],1)+"°C",fmt(R.heatM[mi]),fmt(R.cmpHP.elM[mi]),fmt(elecBill(b+R.cmpHP.elM[mi])-elecBill(b)),fmt(R.cmpHP.bkM[mi])])); }
+  h2("Qabul qilingan tariflar");
+  const et=S.tar.elec.map((t,i)=>`${i===0?"0":fmt(nz(S.tar.elec[i-1][0])+1)}-${t[0]==null||t[0]===""?"...":fmt(+t[0])} kVt·s: ${fmt(nz(t[1]))} so'm`).join("; ");
+  const gt=S.tar.gasTiers.map((t,i)=>`${t[0]==null||t[0]===""?"yuqori":"<= "+fmt(+t[0])} m³: ${fmt(nz(t[1]))} so'm`).join("; ");
+  [`Elektr (aholi, oylik pog'onalar): ${et}.`,`Gaz: norma ichida ${fmt(nz(S.tar.gasNormP))} so'm/m³ (noyabr-fevral ${fmt(nz(S.tar.gasNormW))} m³/oy, boshqa oylar ${fmt(nz(S.tar.gasNormO))} m³/oy); normadan ortiq: ${gt}.`,`Ko'mir: ${fmt(nz(S.tar.coalPrice))} so'm/t, ${fmt(nz(S.tar.coalKwh),1)} kVt·s/kg. Qozon FIK: gaz ${fmt(nz(S.tar.effGas))}%, ko'mir ${fmt(nz(S.tar.effCoal))}%, elektr ${fmt(nz(S.tar.effEl))}%.`,"Usul: EN 12831 (soddalashtirilgan), ISO 13370 (gruntdagi pol), EN 442 (radiatorlar), oylik bin usuli. Hisobiy harorat: SNiP 23-01-99. Hisob dastlabki tanlov uchun mo'ljallangan; yakuniy loyiha mutaxassis tomonidan tasdiqlanadi."].forEach(l=>{ if(y>280){doc.addPage();y=18;} doc.setFontSize(8); doc.setTextColor(70,85,80); const sp=doc.splitTextToSize(P(l),Wd-2*M); doc.text(sp,M,y); y+=sp.length*3.6+1.5; });
+  const pc=doc.getNumberOfPages(); for(let i=1;i<=pc;i++){ doc.setPage(i); doc.setFontSize(7.5); doc.setTextColor(120,135,130); doc.text(P(`${S.client.name||""} · ${i}/${pc}`),Wd-M,290,{align:"right"}); }
+  return doc;
+}
+async function downloadPdf(){
+  if(!window.jspdf||!window.jspdf.jsPDF){ toast("PDF kutubxonasi topilmadi."); return; }
+  let doc; try{ doc=buildPdf(); }catch(err){ console.error(err); toast("PDF tayyorlashda xato: "+err.message); return; }
+  const fname=("Issiqlik_hisobi_"+(S.client.name||"mijoz")).replace(/[ʻʼ‘’']/g,"").replace(/[^\w\-]+/g,"_").slice(0,80)+".pdf";
+  const cap=window.Capacitor;
+  if(cap&&cap.isNativePlatform&&cap.isNativePlatform()){
+    try{
+      const FS=(cap.Plugins&&cap.Plugins.Filesystem)||cap.registerPlugin("Filesystem"), SH=(cap.Plugins&&cap.Plugins.Share)||cap.registerPlugin("Share");
+      const b64=doc.output("datauristring").split(",")[1];
+      const res=await FS.writeFile({path:fname,data:b64,directory:"CACHE"});
+      await SH.share({title:fname,files:[res.uri],dialogTitle:"PDF hisobotni saqlash yoki yuborish"});
+    }catch(err){ if(!/cancel/i.test(String(err&&err.message))) toast("PDF saqlanmadi: "+(err&&err.message||err)); }
+    return;
+  }
+  const isMob=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if(isMob&&navigator.canShare){ try{ const f=new File([doc.output("blob")],fname,{type:"application/pdf"}); if(navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:fname}); return; } }catch(err){ if(err&&err.name==="AbortError") return; } }
+  try{
+    const url=URL.createObjectURL(new Blob([doc.output("arraybuffer")],{type:"application/pdf"}));
+    const a=document.createElement("a"); a.href=url; a.download=fname; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000); toast("PDF tayyor: "+fname);
+  }catch(err){ toast("PDF saqlanmadi: "+err.message); }
+}
+
+/* ===================== PAROL ===================== */
+function sha256(str){ // kichik, mustaqil SHA-256 (oflayn ishlashi uchun)
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const b=new TextEncoder().encode(str); const l=b.length; const n=((l+9+63)>>6)<<6; const m=new Uint8Array(n); m.set(b); m[l]=0x80;
+  const dv=new DataView(m.buffer); dv.setUint32(n-4,(l*8)>>>0); dv.setUint32(n-8,Math.floor(l/0x20000000));
+  let h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]; const w=new Uint32Array(64); const r=(x,k)=>(x>>>k)|(x<<(32-k));
+  for(let o=0;o<n;o+=64){ for(let i=0;i<16;i++) w[i]=dv.getUint32(o+i*4); for(let i=16;i<64;i++){ const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3), s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10); w[i]=(w[i-16]+s0+w[i-7]+s1)>>>0; }
+    let [a,bb,c,d,e,f,g,hh]=h; for(let i=0;i<64;i++){ const t1=(hh+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+K[i]+w[i])>>>0, t2=((r(a,2)^r(a,13)^r(a,22))+((a&bb)^(a&c)^(bb&c)))>>>0; hh=g; g=f; f=e; e=(d+t1)>>>0; d=c; c=bb; bb=a; a=(t1+t2)>>>0; }
+    h=h.map((x,i)=>(x+[a,bb,c,d,e,f,g,hh][i])>>>0); }
+  return h.map(x=>x.toString(16).padStart(8,"0")).join("");
+}
+const PW_SALT="tervan-nasos:", PW_DEFAULT="059a8ab003fc5bb36ef39bea698febce06058041773411ed5f6101d861ef5fba";
+const pwHash=()=>{ try{ return localStorage.getItem("tervan.pw")||PW_DEFAULT; }catch(e){ return PW_DEFAULT; } };
+function showLogin(){ $("#login").hidden=false; $("#app").hidden=true; setTimeout(()=>$("#pwIn").focus(),50); }
+function unlock(){ $("#login").hidden=true; $("#app").hidden=false; try{ sessionStorage.setItem("tervan.ok","1"); }catch(e){} }
+$("#loginForm").addEventListener("submit",e=>{ e.preventDefault(); const v=$("#pwIn").value; if(sha256(PW_SALT+v)===pwHash()){ $("#pwErr").hidden=true; $("#pwIn").value=""; unlock(); } else { $("#pwErr").hidden=false; $("#pwIn").select(); } });
+$("#btnLock").addEventListener("click",()=>{ try{ sessionStorage.removeItem("tervan.ok"); }catch(e){} showLogin(); });
+$("#btnPw").addEventListener("click",()=>{ $("#pwDlg").hidden=false; $("#pwOld").focus(); });
+$("#pwCancel").addEventListener("click",()=>{ $("#pwDlg").hidden=true; });
+$("#pwForm").addEventListener("submit",e=>{ e.preventDefault(); const o=$("#pwOld").value, n1=$("#pwNew").value, n2=$("#pwNew2").value, msg=$("#pwMsg");
+  if(sha256(PW_SALT+o)!==pwHash()){ msg.textContent="Joriy parol noto'g'ri."; return; }
+  if(n1.length<4){ msg.textContent="Yangi parol kamida 4 belgidan iborat bo'lsin."; return; }
+  if(n1!==n2){ msg.textContent="Yangi parollar bir xil emas."; return; }
+  try{ localStorage.setItem("tervan.pw",sha256(PW_SALT+n1)); }catch(err){ msg.textContent="Parolni saqlab bo'lmadi."; return; }
+  ["#pwOld","#pwNew","#pwNew2"].forEach(s=>$(s).value=""); msg.textContent=""; $("#pwDlg").hidden=true; toast("Parol o'zgartirildi"); });
+$("#loginLogo").src=document.querySelector(".brand img").src;
+let okSess=false; try{ okSess=sessionStorage.getItem("tervan.ok")==="1"; }catch(e){}
+if(okSess) unlock(); else showLogin();
+
+renderInputs(); render();
+</script>
+<script>if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }</script>
+</body></html>
