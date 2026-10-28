@@ -1,5 +1,5 @@
 // TERVAN Nasos — internetsiz ishlash uchun kesh
-const C = "tervan-nasos-v2";
+const C = "tervan-nasos-v3";
 const PRE = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"];
