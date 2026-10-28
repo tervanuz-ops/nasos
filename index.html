@@ -79,7 +79,7 @@ body{color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;
 .in input,.in select{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;padding:7px 9px}
 .in select{padding-right:4px;cursor:pointer}
 .in i{font-style:normal;font-size:11.5px;color:var(--muted);padding-right:9px;white-space:nowrap}
-.in input[type=number]{font-family:var(--f-mono);font-size:13px}
+.in input[data-t=n]{font-family:var(--f-mono);font-size:13px}
 .chk{display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer}
 .rows{display:flex;flex-direction:column;gap:8px}
 .row{display:grid;gap:8px;align-items:end;background:var(--field);border:1px solid var(--line);border-radius:8px;padding:10px}
@@ -192,20 +192,20 @@ if(!window.jspdf){ document.write('<script src="https://cdnjs.cloudflare.com/aja
 /* ===================== MA'LUMOTLAR BAZASI ===================== */
 // Hududlar: hisobiy tashqi harorat (eng sovuq 5 kunlik, ShNK 2.01.01 ga yaqin) va oylik o'rtacha haroratlar (Okt..Apr)
 const REG = {
-  toshkent_sh:{n:"Toshkent shahri",te:-16,d:129,tp:2.7,m:[14.5,8,3.5,1.5,3.5,9.5,15.5]},
-  toshkent_v:{n:"Toshkent viloyati",te:-17,d:135,tp:2.2,m:[13.5,7,2.5,0.5,2.5,8.5,14.5]},
-  andijon:{n:"Andijon viloyati",te:-16,d:130,tp:1.6,m:[14,6.5,1,-2,1.5,8.5,15.5]},
-  fargona:{n:"Farg'ona viloyati",te:-15,d:132,tp:1.9,m:[14,7,1.5,-1.5,2,9,16]},
-  namangan:{n:"Namangan viloyati",te:-17,d:128,tp:1.5,m:[14,6.5,1,-2,1.5,9,16]},
-  sirdaryo:{n:"Sirdaryo viloyati",te:-20,d:134,tp:1.8,m:[14,7,2,-0.5,2,9,16]},
-  jizzax:{n:"Jizzax viloyati",te:-19,d:126,tp:2.7,m:[14.5,7.5,2.5,0.5,3,9.5,16]},
-  samarqand:{n:"Samarqand viloyati",te:-15,d:133,tp:3.3,m:[14,8,3.5,1,3,8.5,14.5]},
-  qashqadaryo:{n:"Qashqadaryo viloyati",te:-14,d:110,tp:4.2,m:[16,9.5,4.5,2.5,5,11,17]},
-  surxondaryo:{n:"Surxondaryo viloyati",te:-12,d:91,tp:4.5,m:[18,10.5,5.5,3.5,6,12,18.5]},
-  buxoro:{n:"Buxoro viloyati",te:-15,d:126,tp:3.1,m:[15,8,2.5,0.5,3.5,10,17]},
-  navoiy:{n:"Navoiy viloyati",te:-16,d:123,tp:3.5,m:[14.5,7.5,2,0,3,9.5,16.5]},
-  xorazm:{n:"Xorazm viloyati",te:-21,d:148,tp:0.8,m:[13,5,-1,-3.5,-1,6,15]},
-  qoraqalpoq:{n:"Qoraqalpog'iston Respublikasi",te:-23,d:143,tp:-0.6,m:[12,3.5,-2.5,-5,-2.5,5,14]},
+  toshkent_sh:{n:"Toshkent shahri",te:-15,ta:14.8,d:129,tp:2.7,m:[14.5,8,3.5,1.5,3.5,9.5,15.5]},
+  toshkent_v:{n:"Toshkent viloyati",te:-16,ta:13.5,d:135,tp:2.2,m:[13.5,7,2.5,0.5,2.5,8.5,14.5]},
+  andijon:{n:"Andijon viloyati",te:-15,ta:14.3,d:130,tp:1.6,m:[14,6.5,1,-2,1.5,8.5,15.5]},
+  fargona:{n:"Farg'ona viloyati",te:-14,ta:14.0,d:132,tp:1.9,m:[14,7,1.5,-1.5,2,9,16]},
+  namangan:{n:"Namangan viloyati",te:-16,ta:13.5,d:128,tp:1.5,m:[14,6.5,1,-2,1.5,9,16]},
+  sirdaryo:{n:"Sirdaryo viloyati",te:-19,ta:14.3,d:134,tp:1.8,m:[14,7,2,-0.5,2,9,16]},
+  jizzax:{n:"Jizzax viloyati",te:-18,ta:14.5,d:126,tp:2.7,m:[14.5,7.5,2.5,0.5,3,9.5,16]},
+  samarqand:{n:"Samarqand viloyati",te:-13,ta:13.8,d:133,tp:3.3,m:[14,8,3.5,1,3,8.5,14.5]},
+  qashqadaryo:{n:"Qashqadaryo viloyati",te:-12,ta:16.4,d:110,tp:4.2,m:[16,9.5,4.5,2.5,5,11,17]},
+  surxondaryo:{n:"Surxondaryo viloyati",te:-11,ta:17.8,d:91,tp:4.5,m:[18,10.5,5.5,3.5,6,12,18.5]},
+  buxoro:{n:"Buxoro viloyati",te:-14,ta:15.8,d:126,tp:3.1,m:[15,8,2.5,0.5,3.5,10,17]},
+  navoiy:{n:"Navoiy viloyati",te:-15,ta:15.0,d:123,tp:3.5,m:[14.5,7.5,2,0,3,9.5,16.5]},
+  xorazm:{n:"Xorazm viloyati",te:-20,ta:13.0,d:148,tp:0.8,m:[13,5,-1,-3.5,-1,6,15]},
+  qoraqalpoq:{n:"Qoraqalpog'iston Respublikasi",te:-22,ta:12.4,d:143,tp:-0.6,m:[12,3.5,-2.5,-5,-2.5,5,14]},
 };
 const HEAT_MI=[9,10,11,0,1,2,3];
 const MONTHS=["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"];
@@ -241,7 +241,7 @@ const DEFAULT = () => ({
   skylights:[],
   rads:[{type:"alyumin",n:12,sec:12,w:null}],
   floor:{type:"grunt",base:"beton",ins:"none",insTh:0},
-  vent:{n:"0.5",hr:0}, bridge:"0.05", margin:10,
+  vent:{n:"0.5",hr:0}, bridge:"0.05", margin:0, v:3,
   dhw:{on:true,persons:4,liters:50}, emitter:"rad",
   pumps:[
     {name:"Namuna: havo–suv 6 kVt inverter",kind:"havo",p7:6,cop7:4.8,pm7:4.9,copm7:2.9,tmin:-25,tmax:60,inv:true,price:32000000},
@@ -263,7 +263,7 @@ const DEFAULT = () => ({
 });
 
 let S = DEFAULT();
-try{ const raw=localStorage.getItem("inhisob.v2")||localStorage.getItem("inhisob.v1"); if(raw){ const d=JSON.parse(raw), D=DEFAULT(); S=Object.assign(D,d); S.tar=Object.assign(DEFAULT().tar,d.tar||{}); S.client=Object.assign(DEFAULT().client,d.client||{}); S.bld=Object.assign(DEFAULT().bld,d.bld||{}); if(!Array.isArray(S.skylights)) S.skylights=[]; if(!Array.isArray(S.rads)) S.rads=DEFAULT().rads; if(!EMIT[S.emitter]) S.emitter="rad"; } }catch(e){}
+try{ const raw=localStorage.getItem("inhisob.v2")||localStorage.getItem("inhisob.v1"); if(raw){ const d=JSON.parse(raw), D=DEFAULT(); S=Object.assign(D,d); S.tar=Object.assign(DEFAULT().tar,d.tar||{}); S.client=Object.assign(DEFAULT().client,d.client||{}); S.bld=Object.assign(DEFAULT().bld,d.bld||{}); if(!Array.isArray(S.skylights)) S.skylights=[]; if(!Array.isArray(S.rads)) S.rads=DEFAULT().rads; if(!EMIT[S.emitter]) S.emitter="rad"; if(!d.v||d.v<3){ S.margin=0; S.v=3; } } }catch(e){}
 let saveT=null; function persist(){ clearTimeout(saveT); saveT=setTimeout(()=>{ try{localStorage.setItem("inhisob.v2",JSON.stringify(S))}catch(e){} },400); }
 
 /* ===================== YORDAMCHILAR ===================== */
@@ -274,7 +274,7 @@ const som=v=>fmt(v)+" so'm";
 function getP(p){ return p.split(".").reduce((o,k)=>o==null?o:o[k],S); }
 function setP(p,v){ const ks=p.split("."); let o=S; for(let i=0;i<ks.length-1;i++) o=o[ks[i]]; o[ks[ks.length-1]]=v; }
 const pid=p=>"f-"+p.replace(/\./g,"-");
-function num(p,label,unit,cls="",ph=""){ const v=getP(p); return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><input type="number" step="any" inputmode="decimal" id="${pid(p)}" data-path="${p}" data-t="n" value="${v??""}" placeholder="${esc(ph)}">${unit?`<i>${unit}</i>`:""}</div></label>`; }
+function num(p,label,unit,cls="",ph=""){ const v=getP(p); return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><input type="text" inputmode="decimal" autocomplete="off" id="${pid(p)}" data-path="${p}" data-t="n" value="${v??""}" placeholder="${esc(ph)}">${unit?`<i>${unit}</i>`:""}</div></label>`; }
 function txt(p,label,cls="",ph=""){ return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><input type="text" id="${pid(p)}" data-path="${p}" data-t="s" value="${esc(getP(p))}" placeholder="${esc(ph)}"></div></label>`; }
 function sel(p,label,map,cls=""){ const v=String(getP(p)); const o=Object.entries(map).map(([k,x])=>`<option value="${k}"${k===v?" selected":""}>${esc(Array.isArray(x)?x[0]:(x.n||x))}</option>`).join(""); return `<label class="f ${cls}" for="${pid(p)}"><span>${label}</span><div class="in"><select id="${pid(p)}" data-path="${p}" data-t="s">${o}</select></div></label>`; }
 function chk(p,label){ return `<label class="chk" for="${pid(p)}"><input type="checkbox" id="${pid(p)}" data-path="${p}" data-t="b"${getP(p)?" checked":""}> ${label}</label>`; }
@@ -287,7 +287,7 @@ function renderInputs(){
   $("#inputs").innerHTML = [
   sec("01","Mijoz va joylashuv","",`<div class="grid">${txt("client.name","Mijoz F.I.Sh.","w2")}${txt("client.phone","Telefon","","+998 ...")}${txt("client.address","Manzil","w2")}${txt("client.preparer","Hisobni tayyorladi","","Kompaniya / usta")}
     ${sel("region","Hudud",REG,"w2")}${num("ti","Ichki harorat","°C")}${num("teOv","Hisobiy tashqi harorat","°C","","avto")}</div><div class="info" id="regInfo"></div>`),
-  sec("02","Bino o'lchamlari","Tashqi o'lchamlar bo'yicha",`<div class="grid">${num("bld.len","Uzunligi","m")}${num("bld.wid","Eni","m")}${num("bld.floors","Qavatlar soni","")}${num("bld.h","Qavat balandligi","m")}${num("bld.area","Uyning jami maydoni","m²","","avto")}${num("bld.perim","Tashqi devorlar uzunligi","m","","avto")}</div><p class="note">Jami maydon — barcha isitiladigan qavatlar yig'indisi. Tashqi devorlar uzunligi — uy perimetri (bir qavat bo'yicha). Bo'sh qoldirilsa, uzunlik va endan hisoblanadi; murakkab shakldagi (G, P shaklli) uylar uchun ikkalasini aniq kiriting.</p><div class="info" id="geoInfo"></div>`),
+  sec("02","Bino o'lchamlari","Tashqi o'lchamlar bo'yicha",`<div class="grid">${num("bld.len","Uzunligi","m")}${num("bld.wid","Eni","m")}${num("bld.floors","Qavatlar soni","")}${num("bld.h","Qavat balandligi","m")}${num("bld.area","Uyning jami maydoni","m²","","avto")}${num("bld.perim","Tashqi devorlar uzunligi","m","","avto")}</div><p class="note">Jami maydon — barcha isitiladigan qavatlar yig'indisi. Tashqi devorlar uzunligi — uy perimetri (bir qavat bo'yicha). Jami maydon kiritilsa, uzunlik va eni hisobga olinmaydi (perimetr kiritilmasa, maydondan taxminan topiladi); bo'sh qoldirilsa, uzunlik × eni × qavatlar olinadi; murakkab shakldagi (G, P shaklli) uylar uchun ikkalasini aniq kiriting.</p><div class="info" id="geoInfo"></div>`),
   sec("03","Tashqi devorlar","Maydon bo'sh bo'lsa — avtomatik",`<div class="rows">${S.walls.map((w,i)=>`<div class="row wall">${sel(`walls.${i}.mat`,"Devor materiali",Object.fromEntries(Object.entries(WALLMAT).map(([k,v])=>[k,[`${v[0]} · λ ${String(v[1]).replace(".",",")}`]])),"wide")}${num(`walls.${i}.th`,"Qalinligi","sm")}${sel(`walls.${i}.ins`,"Izolyatsiya",INS,"wide")}${num(`walls.${i}.insTh`,"Izol. qalinligi","sm")}${num(`walls.${i}.area`,"Maydon","m²","","avto")}<div style="display:flex;align-items:center">${S.walls.length>1?`<button class="x" type="button" data-del="walls.${i}" aria-label="O'chirish">×</button>`:""}</div><span class="meta" style="grid-column:1/-1;white-space:normal" id="u-wall-${i}"></span></div>`).join("")}</div><button class="btn sm add" type="button" data-add="walls">+ Devor turi qo'shish</button><p class="note">Devor turlari bir nechta bo'lsa (masalan, eski g'isht qism va yangi gazoblok qism), har birini alohida qo'shing va maydonini kiriting. Ichki va tashqi suvoq hisobga olingan.</p>`),
   sec("04","Derazalar","",`<div class="rows">${S.windows.map((w,i)=>`<div class="row win">${sel(`windows.${i}.type`,"Deraza turi",Object.fromEntries(Object.entries(WIN).map(([k,v])=>[k,[`${v[0]} · U ${String(v[1]).replace(".",",")}`]])),"wide")}${num(`windows.${i}.w`,"Eni","m")}${num(`windows.${i}.h`,"Bo'yi","m")}${num(`windows.${i}.n`,"Soni","dona")}<div style="display:flex;gap:4px;align-items:center"><span class="meta" id="a-win-${i}"></span><button class="x" type="button" data-del="windows.${i}" aria-label="O'chirish">×</button></div></div>`).join("")}</div><button class="btn sm add" type="button" data-add="windows">+ Deraza qo'shish</button>`),
   sec("05","Eshiklar va darvozalar","",`<div class="rows">${S.doors.map((w,i)=>`<div class="row door">${sel(`doors.${i}.type`,"Eshik turi",Object.fromEntries(Object.entries(DOOR).map(([k,v])=>[k,[`${v[0]} · U ${String(v[1]).replace(".",",")}`]])),"wide")}${sel(`doors.${i}.loc`,"Qayerga ochiladi",DOORLOC,"wide")}${num(`doors.${i}.w`,"Eni","m")}${num(`doors.${i}.h`,"Bo'yi","m")}${num(`doors.${i}.n`,"Soni","")}<div style="display:flex;gap:4px;align-items:center"><button class="x" type="button" data-del="doors.${i}" aria-label="O'chirish">×</button></div></div>`).join("")}</div><button class="btn sm add" type="button" data-add="doors">+ Eshik qo'shish</button>`),
@@ -321,7 +321,7 @@ function calc(){
   const Ti=nz(S.ti)||20, Te=(S.teOv===null||S.teOv===""||S.teOv==null)?r.te:+S.teOv, dT=Ti-Te;
   const L=nz(S.bld.len), W=nz(S.bld.wid), F=Math.max(1,Math.round(nz(S.bld.floors))), H=nz(S.bld.h);
   const areaOv=nz(S.bld.area)>0?nz(S.bld.area):0, perOv=nz(S.bld.perim)>0?nz(S.bld.perim):0;
-  const heated=areaOv||L*W*F, foot=heated/F, perim=perOv||2*(L+W), wallGross=perim*H*F, vol=heated*H;
+  const heated=areaOv||L*W*F, foot=heated/F; const perEst=areaOv?2*(Math.sqrt(1.5*foot)+Math.sqrt(foot/1.5)):2*(L+W); const perim=perOv||perEst, wallGross=perim*H*F, vol=heated*H;
   const els=[];
   // derazalar va eshiklar
   let winA=0, doorA=0;
@@ -343,7 +343,7 @@ function calc(){
   const ft=FLOORT[S.floor.type]||FLOORT.grunt; const Rf=layerR((FLOORB[S.floor.base]||FLOORB.beton)[1],S.floor.ins,S.floor.insTh); let floorU;
   if(S.floor.type==="grunt"){ const B=perim>0?foot/(0.5*perim):1, lg=2.0, wt=nz(S.walls[0]?.th)/100||0.3; const dt=wt+lg*(0.17+Rf+0.04); floorU=dt<B? 2*lg/(Math.PI*B+dt)*Math.log(Math.PI*B/dt+1) : lg/(0.457*B+dt); }
   else if(S.floor.type==="yertola") floorU=1/(0.17+Rf+0.17); else floorU=1/(0.17+Rf+0.04);
-  if(ft[1]>0) els.push({g:"Pol",name:ft[0]+(S.floor.type==="grunt"?" (ISO 13370)":""),A:foot,U:floorU,b:ft[1]});
+  const fb=S.floor.type==="grunt"?Math.min(1,1.45*Math.max(0,Ti-(r.ta??14))/Math.max(1,dT)):ft[1]; if(ft[1]>0) els.push({g:"Pol",name:ft[0]+(S.floor.type==="grunt"?" (ISO 13370; grunt harorati hisobga olingan)":""),A:foot,U:floorU,b:fb});
   // issiqlik ko'priklari
   const envA=els.reduce((s,e)=>s+e.A,0), dU=+S.bridge||0.05;
   els.push({g:"Issiqlik ko'priklari",name:`ΔU = ${String(dU).replace(".",",")} W/m²K × ${fmt(envA)} m²`,A:envA,U:dU,b:1,bridge:true});
@@ -353,7 +353,7 @@ function calc(){
   const HV=0.34*n*vol*0.85*(1-hr); // ichki hajm ≈ 0.85 × tashqi
   const Qtr=HT*dT, Qv=HV*dT, Qheat=Qtr+Qv, Qdes=Qheat*(1+nz(S.margin)/100);
   const dhwOn=!!S.dhw.on, persons=nz(S.dhw.persons), liters=nz(S.dhw.liters);
-  const dhwAllow=dhwOn?persons*250:0, Qtot=Qdes+dhwAllow;
+  const dhwAllow=dhwOn?persons*200:0, Qtot=Qdes+dhwAllow;
   const dhwYear=dhwOn? persons*liters*4.186*40/3600*365*1.1 : 0; const dhwM=MDAYS.map(d=>dhwYear*d/365);
   // bin usuli: har oy uchun soatlik harorat taqsimoti (σ = 5 K)
   const Htot=HT+HV, Tbal=Ti-3; const bins=[];
@@ -370,13 +370,14 @@ function calc(){
     const over=req>75; const supply=Math.min(75,Math.max(35,Math.ceil(req)));
     const avgSec=(()=>{ const r=S.rads.find(r=>(RADT[r.type]||RADT.alyumin)[3]==="seksiya"); return r?(nz(r.w)||(RADT[r.type]||RADT.alyumin)[1]):170; })();
     const add55=Math.max(0,Math.ceil((need/Math.pow((55-2.5-Ti)/50,nexp)-q50)/avgSec)), add45=Math.max(0,Math.ceil((need/Math.pow((45-2.5-Ti)/50,nexp)-q50)/avgSec));
-    rad={q50,nexp,need,req,supply,over,out45:outAt(45),out55:outAt(55),out65:outAt(65),add55,add45,avgSec};
+    rad={q50,nexp,need,req,supply,over,rel:sup=>Math.pow(Math.max(0,sup-2.5-Ti)/50,nexp),out45:outAt(45),out55:outAt(55),out65:outAt(65),add55,add45,avgSec};
     tfDes=q50>0?supply:55;
   }
   const tfAt=T=>Math.min(tfDes,Math.max(28,25+(tfDes-25)*(Ti-T)/Math.max(1,dT)));
   const designLoad=T=>(Htot*(1+nz(S.margin)/100)*Math.max(0,Ti-T)+dhwAllow)/1000;
-  const ctx={r,Ti,Te,dT,tfDes,tfAt,designLoad,bins,heatM,heatYear,dhwM,dhwYear,Qtot};
+  const ctx={r,Ti,Te,dT,tfDes,tfAt,designLoad,bins,heatM,heatYear,dhwM,dhwYear,Qtot,radRel:rad&&rad.q50>0?rad.rel:null};
   const pumps=S.pumps.map((hp,i)=>evalHP(hp,i,ctx));
+  if(!pumps.some(p=>p.cls<=1)){ S.pumps.forEach((hp,i)=>{ if(!(nz(hp.p7)>0)) return; for(let n=2;n<=4;n++){ const h2={...hp,name:`${n} × ${hp.name||"Nasos "+(i+1)} (kaskad)`,p7:nz(hp.p7)*n,pm7:nz(hp.pm7)?nz(hp.pm7)*n:null,price:nz(hp.price)*n+nz(S.install)*(n-1)}; const e=evalHP(h2,"k"+i+"_"+n,ctx); if(e.cls===0){ e.cascade=n; pumps.push(e); break; } if(e.cls===2||e.cls===4) break; } }); }
   // tavsiya
   const life=p=>p.capex+10*p.cost;
   const pick=cls=>pumps.filter(p=>p.cls===cls).sort((a,b)=>life(a)-life(b))[0];
@@ -400,23 +401,24 @@ function evalHP(hp,i,c){
   const sP=(p7-pm7)/14, sC=(c7-cm7)/14;
   const cap=(T,tf)=>{ if(T<tmin) return 0; let P=isAir?(T>=-7?pm7+sP*(T+7):pm7-0.5*sP*(-7-T)):p7; P=Math.max(0.35*p7,Math.min(1.25*p7,P)); return P*(1-0.008*(tf-35)); };
   const cop=(T,tf)=>{ let C=isAir?(T>=-7?cm7+sC*(T+7):cm7-0.5*sC*(-7-T)):c7; C=Math.min(c7*1.45,C); C*=Math.min(1.15,1-0.025*(tf-35)); return Math.max(1.2,C); };
-  const flowOk=c.tfDes<=tmax;
-  const Pdes=cap(c.Te,c.tfDes); const cov=c.Qtot>0?Pdes*1000/c.Qtot:0;
-  let biv=null; for(let T=20;T>=c.Te-0.01;T-=0.5){ if(cap(T,c.tfAt(T))<c.designLoad(T)){ biv=T; break; } }
+  const flowOk=tmax>=35; const tfLim=T=>Math.min(c.tfAt(T),tmax); const radF=T=>{ const nd=c.tfAt(T); if(nd<=tmax) return 1; if(!c.radRel) return Math.max(0,1-0.03*(nd-tmax)); return Math.min(1,c.radRel(tmax)/Math.max(1e-6,c.radRel(nd))); };
+  const Pdes=cap(c.Te,tfLim(c.Te)); const cov=c.Qtot>0?Pdes*1000/c.Qtot:0;
+  let biv=null; for(let T=20;T>=c.Te-0.01;T-=0.5){ if(cap(T,tfLim(T))<c.designLoad(T)){ biv=T; break; } }
   const elM=Array(12).fill(0), hpM=Array(12).fill(0), bkM=Array(12).fill(0);
-  c.bins.forEach(b=>{ const tf=c.tfAt(b.T); const P=flowOk?cap(b.T,tf):0; const out=Math.min(b.load,P); const bk=b.load-out; hpM[b.mi]+=out*b.h; bkM[b.mi]+=bk*b.h; elM[b.mi]+=(out>0?out/cop(b.T,tf):0)*b.h+bk*b.h; });
+  c.bins.forEach(b=>{ const tf=tfLim(b.T); const P=flowOk?cap(b.T,tf):0; const radLim=b.load*radF(b.T); const out=Math.min(b.load,P,radLim); const bk=b.load-out; hpM[b.mi]+=out*b.h; bkM[b.mi]+=bk*b.h; elM[b.mi]+=(out>0?out/cop(b.T,tf):0)*b.h+bk*b.h; });
   const copD=flowOk?cop(12,Math.min(tmax,52)):1; c.dhwM.forEach((q,mi)=>{ elM[mi]+=q/copD; });
   const hpHeat=hpM.reduce((a,b)=>a+b,0), bkHeat=bkM.reduce((a,b)=>a+b,0), el=elM.reduce((a,b)=>a+b,0);
   const share=c.heatYear>0?hpHeat/c.heatYear:0; const scop=el>0?(c.heatYear+c.dhwYear)/el:0;
   const cost=elecIncr(elM); const backupKw=Math.max(0,c.Qtot/1000-Pdes);
   let cls,verdict;
-  if(!flowOk){cls=4;verdict="Mos emas: suv harorati yetmaydi";}
+  if(!flowOk){cls=4;verdict="Mos emas: suv harorati juda past";}
   else if(p7<=0){cls=4;verdict="Ma'lumot to'liq emas";}
   else if(cov>1.6){cls=2;verdict="Ortiqcha katta";}
-  else if(cov>=0.95){cls=0;verdict="Mos keladi";}
+  else if(cov>=0.9){cls=0;verdict="Mos keladi";}
   else if(cov>=0.7&&share>=0.9){cls=1;verdict="Zaxira qizdirgich bilan mos";}
   else {cls=3;verdict="Quvvati yetmaydi";}
-  return {i,name:hp.name||`Nasos ${i+1}`,kind:hp.kind,p7,c7,pm7,cm7,tmin,tmax,inv:!!hp.inv,price:nz(hp.price),capex:nz(hp.price)+nz(S.install),Pdes,cov,biv,share,scop,el,elM,hpM,bkM,bkHeat,cost,backupKw,cls,verdict,flowOk,copD,copDes:cop(c.Te,c.tfDes)};
+  if(flowOk&&c.tfDes>tmax&&cls<=1) verdict+=` (suv maks. ${tmax}°C)`;
+  return {i,name:hp.name||`Nasos ${i+1}`,kind:hp.kind,p7,c7,pm7,cm7,tmin,tmax,inv:!!hp.inv,price:nz(hp.price),capex:nz(hp.price)+nz(S.install),Pdes,cov,biv,share,scop,el,elM,hpM,bkM,bkHeat,cost,backupKw,cls,verdict,flowOk,copD,copDes:cop(c.Te,tfLim(c.Te))};
 }
 function tierCost(x,tiers){ let c=0,prev=0; for(const [lim,p] of tiers){ const Lm=(lim==null||lim==="")?Infinity:+lim; if(x>prev) c+=(Math.min(x,Lm)-prev)*nz(p); prev=Lm; if(x<=Lm) break; } return c; }
 function elecBill(k){ return tierCost(k,S.tar.elec); }
@@ -444,7 +446,7 @@ let LAST=null;
 function render(){
   const R=calc(); LAST=R;
   $("#regInfo").textContent=`${R.r.n}: hisobiy tashqi harorat ${fmt(R.Te)}°C · isitish davri ${R.r.d} kun, o'rtacha ${fmt(R.r.tp,1)}°C · ΔT = ${fmt(R.dT)} K`;
-  $("#geoInfo").textContent=`Jami maydon ${fmt(R.heated,1)} m²${R.areaOv?" (kiritilgan)":""} · 1 qavat ${fmt(R.foot,1)} m² · hajm ${fmt(R.vol)} m³ · tashqi devorlar uzunligi ${fmt(R.perim,1)} m${R.perOv?" (kiritilgan)":""} · devorlar maydoni (yalpi) ${fmt(R.wallGross,1)} m²`;
+  $("#geoInfo").textContent=`Jami maydon ${fmt(R.heated,1)} m²${R.areaOv?" (kiritilgan)":""} · 1 qavat ${fmt(R.foot,1)} m² · hajm ${fmt(R.vol)} m³ · tashqi devorlar uzunligi ${fmt(R.perim,1)} m${R.perOv?" (kiritilgan)":R.areaOv?" (maydondan taxminiy — aniq kiriting)":""} · devorlar maydoni (yalpi) ${fmt(R.wallGross,1)} m²`;
   $("#roofInfo").textContent=`U = ${fmt(R.roofU,2)} W/m²K · maydon ${fmt(R.roofA,1)} m²${R.skyA>0?` (lomboz ${fmt(R.skyA,1)} m² ayirilgan)`:""}`;
   S.skylights.forEach((w,i)=>{ const e=$("#a-sky-"+i); if(e) e.textContent=`${fmt(w._A,1)} m²`; });
   if(R.rad){ S.rads.forEach((r,i)=>{ const e=$("#q-rad-"+i); if(e) e.textContent=`${fmt(r._q)} W`; }); const ri=$("#radInfo"); if(ri) ri.textContent=R.rad.q50>0?`Radiatorlar nominal quvvati ${fmt(R.rad.q50)} W (ΔT50) · kerak ${fmt(R.rad.need)} W → suv harorati kamida ${fmt(R.rad.req,1)}°C${R.rad.over?" — radiatorlar yetmaydi!":""}`:"Radiatorlar kiritilmagan — 55°C qabul qilindi"; }
@@ -465,6 +467,7 @@ function render(){
   // tavsiya
   if(rec){ const b=R.buf; html+=`<section class="rec"><span class="pill ${pillCls(rec.cls)}">Tavsiya</span><h3 style="margin-top:6px">${esc(rec.name)}</h3>
     <p class="why">${fmt(R.Te)}°C da ${fmt(rec.Pdes,1)} kVt beradi — ehtiyojning ${fmt(rec.cov*100)}% i. Yillik issiqlikning ${fmt(rec.share*100)}% ini nasos qoplaydi, mavsumiy COP ${fmt(rec.scop,2)}.</p><ul>
+    ${rec.cascade?`<li>Bitta nasos yetmaydi — ${rec.cascade} ta bir xil nasos kaskad (parallel) ulanadi.</li>`:""}${R.tfDes>rec.tmax?`<li>Radiatorlar ${fmt(R.tfDes)}°C suv talab qiladi, nasos maks. ${fmt(rec.tmax)}°C beradi — eng sovuq kunlarda zaxira qizdirgich yordam beradi; radiator qo'shish tavsiya etiladi.</li>`:""}
     ${rec.biv!=null?`<li>Bivalent nuqta: ${fmt(rec.biv,1)}°C — undan sovuqda zaxira qizdirgich ${fmt(rec.backupKw,1)} kVt kerak.</li>`:`<li>Hisobiy haroratgacha zaxira qizdirgichsiz ishlaydi.</li>`}
     ${b?`<li>Buffer tank: kamida ${fmt(b.V)} L (${b.perKw} L/kVt). ${b.tank?`Tanlov: <b>${esc(b.tank.name)}</b> — ${fmt(b.tank.vol)} L${b.enough?"":" (yetarli emas, kattaroq tank kerak)"}${b.big?" (ortiqcha katta, isish sekinlashadi)":""}.`:"Katalogda buffer tank yo'q."}</li>`:""}
     <li>Yillik elektr: ${fmt(rec.el)} kVt·s · isitish xarajati ≈ ${som(rec.cost)}/yil</li></ul></section>`; }
@@ -482,7 +485,7 @@ function render(){
   // nasoslar jadvali
   html+=`<section class="sec"><h2><span class="n">A</span>Issiqlik nasoslari solishtirmasi<span class="hint">Suv: ${fmt(R.tfDes)}°C · havo: ${fmt(R.Te)}°C</span></h2><div class="tw"><table><thead><tr><th>Nasos</th><th class="num">P (${fmt(R.Te)}°C)</th><th class="num">Qoplash</th><th class="num">Bivalent</th><th class="num">SCOP</th><th class="num">Elektr/yil</th><th class="num">Xarajat/yil</th><th>Holati</th></tr></thead><tbody>
     ${R.pumps.map(p=>`<tr class="${rec&&p.i===rec.i?"best":""}"><td>${esc(p.name)}<div class="meta">${HPKIND[p.kind]||""} · ${fmt(p.p7,1)} kVt · ${som(p.price)}</div></td><td class="num">${fmt(p.Pdes,1)} kVt</td><td class="num">${fmt(p.cov*100)}%</td><td class="num">${p.biv!=null?fmt(p.biv,1)+"°C":"—"}</td><td class="num">${fmt(p.scop,2)}</td><td class="num">${fmt(p.el)}</td><td class="num">${fmt(p.cost)}</td><td><span class="pill ${pillCls(p.cls)}">${p.verdict}</span></td></tr>`).join("")}
-    </tbody></table></div><p class="note">Tanlov mezoni: mos keladiganlar orasida 10 yillik umumiy xarajati (narx + montaj + 10 × yillik elektr) eng kami. Qoplash 95–160% oralig'ida "mos" deb hisoblanadi.</p></section>`;
+    </tbody></table></div><p class="note">Tanlov mezoni: mos keladiganlar orasida 10 yillik umumiy xarajati (narx + montaj + 10 × yillik elektr) eng kami. Qoplash 90–160% oralig'ida "mos" deb hisoblanadi. Bitta nasos yetmasa, 2–4 ta nasosli kaskad ham tekshiriladi.</p></section>`;
   // yo'qotish tarkibi
   html+=`<section class="sec"><h2><span class="n">B</span>Issiqlik yo'qotilishi tarkibi</h2>
     <div style="display:grid;gap:6px;margin-bottom:14px">${gl.map(([g,q])=>`<div style="display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:12.5px"><span>${g}</span><div class="bar" style="width:${(q/gmax*100).toFixed(1)}%"></div><span class="num" style="text-align:right;font-family:var(--f-mono)">${fmt(q)} W · ${fmt(q/R.Qheat*100)}%</span></div>`).join("")}</div>
@@ -516,7 +519,7 @@ function render(){
 }
 
 /* ===================== HODISALAR ===================== */
-document.addEventListener("input",e=>{ const el=e.target; if(!el.dataset||!el.dataset.path) return; const t=el.dataset.t; let v=t==="n"?(el.value===""?null:+el.value):t==="b"?el.checked:el.value;
+document.addEventListener("input",e=>{ const el=e.target; if(!el.dataset||!el.dataset.path) return; const t=el.dataset.t; const nv=String(el.value).replace(/\s/g,"").replace(",","."); let v=t==="n"?(nv===""||!isFinite(+nv)?null:+nv):t==="b"?el.checked:el.value;
   // tarif chegaralari: indeks satr kalit emas
   setP(el.dataset.path,v); if(el.tagName==="SELECT"&&(/^pumps\.\d+\.kind$/.test(el.dataset.path)||/^rads\.\d+\.type$/.test(el.dataset.path)||el.dataset.path==="emitter")){ if(/^rads\.\d+\.type$/.test(el.dataset.path)) setP(el.dataset.path.replace(/type$/,"w"),null); renderInputs(); } render(); });
 document.addEventListener("change",e=>{ const el=e.target; if(el.dataset&&el.dataset.path&&(el.type==="checkbox"||el.tagName==="SELECT")){ /* input hodisasi allaqachon ishladi */ } });
